@@ -1,14 +1,18 @@
 # silival-exercises
 
-C exercises and reference solutions for silicon validation interview prep — focused on the systems-software fundamentals that come up in CPU/SoC post-silicon and bring-up roles.
+Systems-C exercises and reference solutions for the 25-day silicon-validation interview-prep plan. Companion to [../prep_plan/](../prep_plan/) and [EXERCISES.md](EXERCISES.md). **No DSA, no LeetCode** — every exercise is a bit/CSR/MMIO/FSM/PM/PCIe model tied to a specific day.
 
 ## Scope
 
-- Memory model exercises (memcpy/memmove, struct sizes, alignment).
-- MMIO / volatile / polling primitives.
-- Linked-list / cycle detect / pointer fluency.
-- Macro hygiene and CSR (control/status register) modeling.
-- Microbenchmark scaffolds.
+- C ramp: `memcpy`/`memmove`, struct layout, pointers, linked lists.
+- MMIO / `volatile` / polling / W1C / RMW primitives.
+- Macro hygiene, CSR modeling, `container_of`, aligned allocator.
+- Cache simulator, MESI step machine, 4-level page walk, TLB + IOMMU.
+- DMA descriptor + barrier + doorbell pattern; SPSC ring with acq/rel.
+- CPU bring-up ladder, pipeline + BP, license-level model.
+- DVFS / P-state, PkgC gate, UPF power domain with SAVE/ISO/RESTORE asserts.
+- Thermal + RAPL + TMA; PM coverage tracker; residency-delta MSR parser.
+- ADR opcode model; LTSSM walker; PCIe enumeration; ASPM/L1.2 FSM; LTSSM stuck classifier; PkgC blocker arbiter.
 
 Each exercise has a `d00_*.c` solution under [solutions/](solutions/) and is buildable via the top-level [Makefile](Makefile).
 

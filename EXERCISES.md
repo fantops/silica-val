@@ -1,6 +1,8 @@
 # Coding — Single Exercise Document
 
-> One folder, one document. All 21 days of coding live here. Read the prompt, write the code in `exercises/dNN_<name>.c`, build, run, explain *why*. Only then peek at `solutions/dNN_<name>.c`.
+> One folder, one document. All 25 days of coding live here. Systems-C only. Read the prompt, write the code in `exercises/dNN_<name>.c`, build, run, explain *why*. Only then peek at `solutions/dNN_<name>.c`.
+
+This file is the coding companion to [prep_plan/README.md](../prep_plan/README.md). The plan is **25 days, no DSA, no LeetCode** — every exercise is a bit/CSR/FSM/PM/PCIe systems-C model tied to the day's reading.
 
 ## How to use
 
@@ -25,35 +27,7 @@ make all-sol         # build every reference solution
 make clean
 ```
 
-Naming convention: every file is prefixed `dNN_` where `NN` is the day number. Day 0 = `d00_*.c`, Day 1 = `d01_*.c`, etc. This is the *only* coding folder — old per-day `dayNN/` directories are gone.
-
-## Map: what to do each study day
-
-| Day | Topic | Systems C exercise | DS&A exercise |
-|---|---|---|---|
-| 0 | C basics + MMIO ramp | see [day00_c_basics.md](../21day_plan/day00_c_basics.md) | — |
-| 1 | C address fluency | `d01_reg_poke` | `d01_two_sum` |
-| 2 | Pointers / alignment | `d02_aligned_alloc` | `d02_reverse_list` |
-| 3 | Bits / MMIO / volatile | `d03_dev_init` | `d03_popcount` |
-| 4 | Cache lines / locality | `d04_cache_sim` | `d04_lru_cache` |
-| 5 | Coherence / MESI / false sharing | `d05_mesi_sim` | `d05_cycle_detect` |
-| 6 | Virtual memory / page walk | `d06_page_walk` | `d06_binary_search` |
-| 7 | TLB / IOMMU | `d07_tlb_iommu` | `d07_first_bad` |
-| 8 | DMA / doorbells / barriers | `d08_sq_doorbell` | `d08_merge_two` |
-| 9 | ARM / Qualcomm platform | `d09_psci_rpmh` | `d09_valid_parens` |
-| 10 | PCIe + LTSSM | `d10_ecam_ltssm` | `d10_climb_stairs` |
-| 11 | NVMe queues + bring-up | `d11_nvme_bringup` | `d11_group_anagrams` |
-| 12 | DVFS / P-states | `d12_dvfs` | `d12_max_profit` |
-| 13 | C-states / PkgC / S0ix | `d13_pkgc6` | `d13_climb_stairs` |
-| 14 | ADR / PCU / Core C6 bugs | `d14_adr` | `d14_num_islands` |
-| 15 | Thermal / perf counters | `d15_tj_rapl_tma` | `d15_sliding_max` |
-| 16 | Pipeline / memory model / SIMD | `d16_pipeline_bp` | `d16_count_bits` |
-| 17 | Concurrency / lock-free | `d17_spinlock_spsc` | `d17_eval_rpn` |
-| 18 | NPU dispatch / EP | `d18_npu_dispatch` | `d18_top_k` |
-| 19 | NPU memory / runtime | `d19_regression_gate` | `d19_lru_cache` |
-| 20 | Debug method | `d20_triage` | `d20_num_islands` |
-
-Each Day 1–20 entry below has two sections: **E1 Systems C** and **E2 DS&A**. Architect drills and bug anchors live in the matching `21day_plan/dayNN_*.md` reading file (kept in one place to avoid duplication).
+Naming convention: every file is prefixed `dNN_` where `NN` is the day number. Day 0 = `d00_*.c`, Day 1 = `d01_*.c`, etc.
 
 Build flags used everywhere:
 
@@ -61,11 +35,43 @@ Build flags used everywhere:
 cc -Wall -Wextra -Wpedantic -std=c11 -g -O0 -I. exercises/<file>.c -o /tmp/<file> && /tmp/<file>
 ```
 
+## Map: what to code each study day
+
+| Day | Topic | Exercise |
+|---|---|---|
+| 0 | Embedded-C basics ramp | `d00_*` (see [day00](../prep_plan/day00_c_basics.md)) |
+| 1 | C address fluency | `d01_reg_poke` |
+| 2 | Pointers / alignment | `d02_aligned_alloc` |
+| 3 | Bits / MMIO / volatile / W1C | `d03_dev_init` |
+| 4 | Cache lines / locality / AMAT | `d04_cache_sim` |
+| 5 | Coherence / MESI / false sharing | `d05_mesi_sim` |
+| 6 | Virtual memory / page walk | `d06_page_walk` |
+| 7 | TLB / IOMMU | `d07_tlb_iommu` |
+| 8 | DMA / doorbells / barriers | `d08_sq_doorbell` |
+| 9 | Pipeline + OoO microarch | `d09_pipeline_bp` |
+| 10 | Memory consistency + atomics | `d10_spsc_acqrel` |
+| 11 | CPU bring-up + IP functional val | `d11_cpu_bringup_ladder` |
+| 12 | DVFS / P-states / PVT | `d12_dvfs` |
+| 13 | C-states / PkgC / S0ix | `d13_pkgc6_gate` |
+| 14 | Clock + power gating + UPF | `d14_upf_domain_model` |
+| 15 | Thermal / perf counters | `d15_tj_rapl_tma` |
+| 16 | Pre-Si PM validation | `d16_pm_coverage_tracker` |
+| 17 | Post-Si PM validation + ADR/C6 bugs | `d17_residency_delta` (+ `d17_adr` opcode model) |
+| 18 | PCIe fundamentals + LTSSM | `d18_ltssm_walk` |
+| 19 | PCIe enumeration / config / MSI | `d19_enum_walker` |
+| 20 | PCIe power management (ASPM/L1.2) | `d20_aspm_l12_fsm` |
+| 21 | PCIe bring-up + functional val | `d21_ltssm_stuck_classifier` |
+| 22 | PCIe × PM intersection | `d22_pkgc_blocker_arbiter` |
+| 23 | MSFT/NPU exit pointers (1 day) | — *(no new exercise; reuse `d06_page_walk` to anchor the QNN story)* |
+| 24 | Final mock interview day | — *(re-run any 2-3 exercises cold as warm-up)* |
+
+Each Day 1-22 entry below has one **Systems C exercise** with full problem statement, signatures, driver, and interview prompts. Architect drills and bug anchors live in the matching [`prep_plan/dayNN_*.md`](../prep_plan/) reading file (kept in one place to avoid duplication).
+
 ---
 
 # Day 1 — C address fluency
 
-## D01-E1 — Systems C: full register-poke harness (`d01_reg_poke`)
+## D01 — Register-poke harness (`d01_reg_poke`)
 
 **Problem statement.** Build a simulated MMIO harness from scratch. Back a register with a single `volatile uint32_t` (stand-in for a real BAR offset). Implement bit/field macros, typed accessors, an RMW field-write, and a bounded poll loop. Drive it end-to-end: program a field, demonstrate the timeout path, demonstrate the success path.
 
@@ -89,15 +95,11 @@ static int             wait_for_bit_set(volatile uint32_t *r, uint32_t mask, int
 
 **Interview prompts:** 3 things `volatile` prevents. Why `volatile` ≠ memory barrier. Where does the timeout come from for `CSTS.RDY`? Why is RMW on a W1C status register a bug?
 
-## D01-E2 — DS&A: Two Sum (LC 1) (`d01_two_sum`)
-
-Single-pass hash map. `int *twoSum(int *nums, int n, int target, int *out_i, int *out_j);` Exactly one solution, no element reused, negatives allowed. O(n)/O(n). Firmware analogue: "have I seen this descriptor index before?" lookup table.
-
 ---
 
 # Day 2 — Pointers, memory layout, alignment
 
-## D02-E1 — Systems C: aligned allocator + container_of (`d02_aligned_alloc`)
+## D02 — Aligned allocator + container_of (`d02_aligned_alloc`)
 
 **Problem statement.** Build a manual aligned allocator that satisfies arbitrary power-of-2 alignment on top of plain `malloc`, plus a Linux-style `container_of` macro. Demonstrate both on an intrusive list. Also print `sizeof` for two structs that differ only in field order to show padding is layout-driven.
 
@@ -119,15 +121,11 @@ void  aligned_free(void *p);
 
 **Interview prompts:** Why does the aligned allocator stash the original pointer one slot before the aligned address? Why is `container_of` foundational to Linux callbacks (what does `offsetof` rely on)? What does `__attribute__((packed))` cost on ARM that it doesn't on x86?
 
-## D02-E2 — DS&A: Reverse Linked List (LC 206) (`d02_reverse_list`)
-
-In-place 3-pointer dance (`prev`, `curr`, `next`). `struct node *reverse_list(struct node *head);` Edge cases: empty, single, two, general N. O(n)/O(1). Same shape as queue rotation, stack reversal.
-
 ---
 
 # Day 3 — Bits, MMIO, volatile, polling
 
-## D03-E1 — Systems C: device init harness with poll + RMW (`d03_dev_init`)
+## D03 — Device init harness with poll + RMW (`d03_dev_init`)
 
 **Problem statement.** Build a fake-device init harness using a small `uint8_t mmio[256]` backing array. Implement typed accessors (`reg_read`, `reg_write`, `reg_rmw`), a bounded `poll_ready` that simulates HW asserting ready after N iterations, and a top-level main that resets the device, polls for ready, enables and starts it, then writes/reads `DATA`.
 
@@ -149,15 +147,11 @@ static bool            poll_ready(uint32_t off, uint32_t mask, uint32_t exp, uin
 
 **Interview prompts:** 3 ways the compiler miscompiles missing-`volatile` poll loops at `-O2`. Why is RMW on a W1C status register catastrophic? Why does `volatile` not imply a memory barrier on ARM?
 
-## D03-E2 — DS&A: Number of 1 Bits (LC 191) (`d03_popcount`)
-
-`int hamming_weight(uint32_t n);` Kernighan's `n &= n - 1` is O(set-bits); contrast with naive O(32) and SWAR/`__builtin_popcount`. Edge: 0, `UINT32_MAX`. Where popcount shows up: error-counting, mask-density, perf counters.
-
 ---
 
 # Day 4 — Cache lines, locality, AMAT
 
-## D04-E1 — Systems C: address decode + cache simulator (`d04_cache_sim`)
+## D04 — Address decode + cache simulator (`d04_cache_sim`)
 
 **Problem statement.** Software model of a set-associative cache. Decode each access into `(tag, set, offset)`, look it up across the ways, update LRU bits on hits, evict on misses. Run two access patterns to demonstrate locality vs stride collapse.
 
@@ -177,25 +171,11 @@ bool access(uint32_t addr);   /* return true on hit, false on miss; update LRU *
 
 **Interview prompts:** Decode `tag|set|offset` for the geometry. Why does stride > line size collapse bandwidth? LRU vs PLRU vs Random — area/perf tradeoff. Compute AMAT for `(L1: 4c, miss 5%) → (L2: 12c, miss 30%) → DRAM 200c`.
 
-## D04-E2 — DS&A: LRU Cache (LC 146) (`d04_lru_cache`)
-
-O(1) `get` and `put`. Hash map + intrusive doubly-linked list; move-to-front on access; evict tail on overflow.
-
-```c
-typedef struct LRU LRU;
-LRU *lru_create(int cap);
-int  lru_get(LRU *l, int key);   /* -1 if missing */
-void lru_put(LRU *l, int key, int val);
-void lru_free(LRU *l);
-```
-
-Edge cases: cap = 0/1, repeated `put` (refresh, don't duplicate), `get` on missing. Every TLB and CPU cache uses an LRU approximation.
-
 ---
 
 # Day 5 — Coherence, MESI, false sharing
 
-## D05-E1 — Systems C: MESI step-machine + false-sharing layout check (`d05_mesi_sim`)
+## D05 — MESI step-machine + false-sharing layout check (`d05_mesi_sim`)
 
 **Problem statement.** Model two cores' L1 lines and one main-memory cell. Implement `rd(who)` and `wr(who, v)` that mutate `(cline_t c0, c1)` according to MESI rules — including HITM (other core in M forwards and both go to S) and write-invalidate. After each step, print `C0`, `C1`, `mem`.
 
@@ -213,15 +193,11 @@ void wr(int who, int v);
 
 **Interview prompts:** MESI vs MOESI vs MESIF in one sentence each. Why does false sharing cost ~50–80 cycles per write? HITM counter and `perf c2c` — what do they observe? Why does padding fail if the struct itself isn't 64-B aligned?
 
-## D05-E2 — DS&A: Linked-List Cycle (LC 141, Floyd) (`d05_cycle_detect`)
-
-`int has_cycle(struct node *head);` O(n)/O(1). Edge: empty, single, self-loop, cycle at head, cycle mid-list. Analogue: snoop-race detection (two pointers, different speeds).
-
 ---
 
 # Day 6 — Virtual memory, page faults
 
-## D06-E1 — Systems C: 4-level page walk (`d06_page_walk`)
+## D06 — 4-level page walk (`d06_page_walk`)
 
 **Problem statement.** x86-64-style 4-level page walk in C: four 512-entry tables (`pml4`, `pdpt`, `pd`, `pt`). Each PTE carries `P` and `RW` flags plus a frame-aligned PFN. The walk takes a 64-bit VA, walks the four levels by 9-bit indices, returns either a physical address or 0 with a reason string on fault.
 
@@ -239,17 +215,13 @@ uint64_t walk(uint64_t va, const char **why);
 
 **Driver:** Map `VA 0x0000 → PA 0x1000` and `VA 0x1000 → PA 0x2000`. Walk both → success. Walk `0x2000` → fault `"PT not present"`.
 
-**Interview prompts:** Why 4 levels and not flat? Why is page offset never translated? PFN vs physical address? Page fault vs TLB miss vs cache miss in 30 sec.
-
-## D06-E2 — DS&A: Binary Search (LC 704) (`d06_binary_search`)
-
-`int binary_search(const int *nums, int n, int target);` Edge: empty, single, target outside range, duplicates. Use overflow-safe `mid = lo + (hi - lo) / 2`. Same predicate-driven shape as Day 7 First-Bad-Version, Day 11 NVMe head-tail bisection.
+**Interview prompts:** Why 4 levels and not flat? Why is page offset never translated? PFN vs physical address? Page fault vs TLB miss vs cache miss in 30 sec. *(This is also the anchor exercise for the Day 23 QNN page-fault bug story.)*
 
 ---
 
 # Day 7 — TLB, huge pages, IOMMU/SMMU
 
-## D07-E1 — Systems C: TLB lookup with FIFO + IOMMU translate (`d07_tlb_iommu`)
+## D07 — TLB lookup with FIFO + IOMMU translate (`d07_tlb_iommu`)
 
 **Problem statement.** Two collaborating models.
 
@@ -272,17 +244,13 @@ bool iommu_translate(iommu_ctx_t *c, uint32_t iova, bool wr, uint64_t *pa);
 
 **Interview prompts:** TLB coverage = entries × page size; the 4KB→2MB lever. TLB shootdown via IPI; ARM hardware TLBI broadcast vs x86. Why does the device need a separate IOMMU when the host has an MMU? ATS+PRI — what does it buy and what does it cost?
 
-## D07-E2 — DS&A: First Bad Version (LC 278) (`d07_first_bad`)
-
-Predicate binary search. `int first_bad_version(int n);` over an API `bool is_bad(int v)`. Edge: `n=1`, first version bad, last bad, none bad. Avoid overflow on `(lo+hi)/2`. Same monotonic-predicate shape as scanning sorted PTEs for first-set.
-
 ---
 
 # Day 8 — DMA, doorbells, ordering, barriers
 
-## D08-E1 — Systems C: SQ ring + doorbell harness (`d08_sq_doorbell`)
+## D08 — SQ ring + doorbell harness (`d08_sq_doorbell`)
 
-**Problem statement.** Producer side of an NVMe-style submission queue. Build a 16-entry ring, a `volatile` MMIO doorbell stand-in, a `sq_submit(cmd, arg)` that fills the descriptor, issues a memory barrier, advances the tail, writes the doorbell. Then `device_consume_one()` simulates the device picking up the next entry from `sq_head`.
+**Problem statement.** Producer side of a generic submission-queue / doorbell pattern. Build a 16-entry ring, a `volatile` MMIO doorbell stand-in, a `sq_submit(cmd, arg)` that fills the descriptor, issues a memory barrier, advances the tail, writes the doorbell. Then `device_consume_one()` simulates the device picking up the next entry from `sq_head`.
 
 **Implement:**
 ```c
@@ -297,237 +265,13 @@ void device_consume_one(void);
 
 **Driver:** `sq_submit(0x01, 0xAAAA)`, `sq_submit(0x02, 0xBBBB)`, then `device_consume_one()` × 3 (third = empty). Print head/tail movement.
 
-**Interview prompts:** Why descriptor → barrier → doorbell, *always* in that order? Why is the failure intermittent? `volatile` vs `dmb st` vs cache clean — what does each enforce? ARM `DMB ISH` vs `OSH` vs `SY` — when does each apply? IO-coherent vs non-coherent DMA — what changes in the driver?
-
-## D08-E2 — DS&A: Merge Two Sorted Lists (LC 21) (`d08_merge_two`)
-
-Splice nodes in place, no new allocation. `struct node *merge_two(struct node *a, struct node *b);` Edge: either empty, very different lengths, ties (stable). O(n+m)/O(1). Same shape as draining two CQs into one event log.
+**Interview prompts:** Why descriptor → barrier → doorbell, *always* in that order? Why is the failure intermittent ("works at low rate, fails at line rate")? `volatile` vs `dmb st` vs cache clean — what does each enforce? ARM `DMB ISH` vs `OSH` vs `SY` — when does each apply? IO-coherent vs non-coherent DMA — what changes in the driver?
 
 ---
 
-# Day 9 — ARM / Qualcomm platform vocabulary
+# Day 9 — Pipeline + OoO microarch
 
-## D09-E1 — Systems C: PSCI dispatcher + RPMh vote aggregator (`d09_psci_rpmh`)
-
-**Problem statement.** Two small models that mirror the Qualcomm/ARM power stack.
-
-(a) **PSCI dispatcher.** `psci_call(fid, a1, a2)` recognising `CPU_ON (0x84000003)`, `CPU_OFF (0x84000002)`, `SYSTEM_SUSPEND (0xC400000E)`, `SYSTEM_RESET (0x84000009)`. Maintain `cpus[MAX_CPUS]`; CPU0 initially `ON`. `CPU_ON` validates target index, errors if already on, prints entry-point.
-
-(b) **RPMh aggregator.** Each of N=4 voters submits a `vote_t { freq_khz, volt_mv }`. Aggregator returns per-field max across all voters (each rail floor).
-
-**Implement:**
-```c
-int     psci_call(uint32_t fid, uint64_t a1, uint64_t a2);
-typedef struct { uint32_t freq_khz; uint32_t volt_mv; } vote_t;
-vote_t  rpmh_aggregate(void);
-```
-
-**Driver:** `CPU_ON` for CPU 1 entry `0x80000000` → success. Repeat → already-on error. Populate 4 voter slots (Apps/Modem/CDSP/idle), call `rpmh_aggregate`. `SYSTEM_SUSPEND` with resume entry.
-
-**Interview prompts:** ARM EL0/1/2/3 vs x86 ring 0/3 — why four levels? `TTBR0/1_EL1 + ASID` vs `CR3 + PCID`; granule sizes in `TCR_EL1`. Why does Snapdragon need RPMh on top of PSCI when x86 has PCU alone? GIC SGI/PPI/SPI/LPI; how does ITS handle PCIe MSI?
-
-## D09-E2 — DS&A: Valid Parentheses (LC 20) (`d09_valid_parens`)
-
-`int is_valid_parens(const char *s);` Empty = true. Edge: unbalanced opener/closer, nested mismatch, long input. O(n) stack walk. Same shape as walking PCIe capability chains (Day 10) or matching `BEGIN`/`END` markers in a debug log (Day 20).
-
----
-
-# Day 10 — PCIe fundamentals + LTSSM
-
-## D10-E1 — Systems C: ECAM walker + LTSSM tracker (`d10_ecam_ltssm`)
-
-**Problem statement.** Two helpers.
-
-(a) **ECAM address compute.** Given `(base, bus, dev, fn, reg)`, return the 64-bit ECAM address `bus<<20 | dev<<15 | fn<<12 | (reg & 0xFFF)`. Also `bar_size_from_readback(uint32_t rb)`: write `0xFFFFFFFF` to BAR, read back, mask type bits, invert and add 1 to get size.
-
-(b) **LTSSM tracker.** Define the 10 states (Detect, Polling, Config, L0, Recovery, L0s, L1, L1.1, L1.2, L2). Build an allowed-transition table. `go(link, to)` enforces legality, prints transitions, counts `recoveries` whenever entering Recovery.
-
-**Implement:**
-```c
-uint64_t ecam_addr(uint64_t base, uint8_t bus, uint8_t dev, uint8_t fn, uint16_t reg);
-uint64_t bar_size_from_readback(uint32_t rb);
-
-typedef enum { LTSSM_DETECT, LTSSM_POLLING, LTSSM_CONFIG, LTSSM_L0,
-               LTSSM_RECOVERY, LTSSM_L0S, LTSSM_L1, LTSSM_L1_1,
-               LTSSM_L1_2, LTSSM_L2, LTSSM_NUM } ltssm_t;
-typedef struct { ltssm_t st; unsigned recoveries; } link_t;
-bool go(link_t *l, ltssm_t to);
-```
-
-**Driver:** ECAM `01:02.0` BAR0 against `base=0xE0000000`. `bar_size_from_readback(0xFFF00004)` → `0x100000`. Walk `Detect → Polling → Config → L0 → Recovery → L0 → L1 → L1.2 → Recovery → L0`. One illegal `Detect → L0` → `ILLEGAL`.
-
-**Interview prompts:** 3 PCIe layers (PHY/DLL/TL); what each isolates. Posted vs non-posted; why doorbell-as-MWr won. L1 vs L1.1 vs L1.2; PkgC6 dependency on L1.2. Credit-based flow control vs ACK/NAK pacing.
-
-## D10-E2 — DS&A: Climbing Stairs (LC 70) (`d10_climb_stairs`)
-
-`long long climb_stairs(int n);` 1 or 2 steps. Edge: `n=0` (1 way), `n=1`, `n=45` (overflow on `int`). O(n) DP, O(1) space. Same recurrence as counting LTSSM substate paths or C-state transition paths (Day 13).
-
----
-
-# Day 11 — NVMe queues + bring-up
-
-## D11-E1 — Systems C: NVMe bring-up + SQ submit + CQ poll (`d11_nvme_bringup`)
-
-**Problem statement.** Software model of NVMe controller bring-up on top of an in-memory `bar[BAR_SZ]` array.
-
-Implement:
-- `r32(off)`, `w32(off, v)`, `w64(off, v)` accessors (with the side-effect that writing `CC.EN=1` causes `CSTS.RDY` to follow EN — model stand-in for the device asserting ready).
-- `sim_init()` populates `CAP` with `MQES=255, TO=10, DSTRD=0`.
-- `db_off(q, is_cq, dstrd)` returns `0x1000 + (2*q + (is_cq?1:0)) * (4 << dstrd)`.
-- `nvme_bringup()` performs the canonical 5-step bring-up: read CAP; disable + poll RDY=0; program AQA/ASQ/ACQ (admin queue, size = 32, AQA encodes `size-1` in both halves); enable with `IOSQES=6, IOCQES=4, EN=1`; poll RDY=1; print computed doorbell offsets.
-
-**Register map:** `CAP=0x00, VS=0x08, CC=0x14, CSTS=0x1C, AQA=0x24, ASQ=0x28, ACQ=0x30, DB=0x1000`.
-
-**Implement:**
-```c
-uint32_t r32(uint32_t off);
-void     w32(uint32_t off, uint32_t v);
-void     w64(uint32_t off, uint64_t v);
-uint32_t db_off(uint16_t q, bool is_cq, uint8_t dstrd);
-bool     nvme_bringup(void);
-```
-
-**Driver:** `sim_init()` then `nvme_bringup()`. Expect printed CAP fields, "Controller READY", four doorbell offsets for queues 0 and 1. **Stretch:** simulate the AQA off-by-one bug and show the failure path.
-
-**Interview prompts:** Walk `CSTS.RDY` debug through 5+ suspects (CFS, AQA off-by-one, DSTRD, PRP IOVA, IOMMU EVTQ, MSI-X timing). PRP vs SGL — what workload forced SGLs? Phase bit on CQ — when does it lose? Per-core SQ/CQ pair scaling vs AHCI.
-
-## D11-E2 — DS&A: Group Anagrams (LC 49) (`d11_group_anagrams`)
-
-```c
-typedef struct { char **items; int count; } group_t;
-group_t *group_anagrams(char **strs, int n, int *out_groups);
-```
-
-Edge: empty, single, all anagrams, no dupes. Sort-as-key → O(n·k log k); count-tuple key → O(n·k). Hash-key choice equivalent to descriptor-bucket assignment in firmware log triage.
-
----
-
-# Day 12 — DVFS / P-states / PVT
-
-## D12-E1 — Systems C: DVFS table lookup with thermal cap + IPC counter (`d12_dvfs`)
-
-**Problem statement.** Build a DVFS controller. Given a 5-entry P-state table (P4..P0 from `(400 MHz, 750 mV)` to `(2400 MHz, 1150 mV)`), implement `select_opp(target_mhz, tj_c)` that picks the lowest OPP meeting target frequency, **capped to ≤1200 MHz when `tj_c >= 90`** (thermal throttle). Then `apply_opp(cur, next)` that prints the correct sequencing — **V before F when ramping up, F before V when ramping down**.
-
-Plus a tiny `pmu_t { insns, cycles }` and `ipc()` helper.
-
-**Implement:**
-```c
-typedef struct { uint32_t freq_mhz; uint32_t volt_mv; } opp_t;
-const opp_t *select_opp(uint32_t target_mhz, int tj_c);
-void         apply_opp(const opp_t *cur, const opp_t *next);
-
-typedef struct { uint64_t insns, cycles; } pmu_t;
-double ipc(const pmu_t *p);
-```
-
-**Driver:** OPP for `(400, 50)`, then `(2000, 50)` → ramp-up sequence printed. `(2400, 95)` → thermal cap to 1200 MHz, ramp-down sequence printed. IPC for `insns=15e9, cycles=12.34e9` and flag if `< 1.0`.
-
-**Interview prompts:** Derive $P_{dyn} = \tfrac{1}{2}CV^2F$; explain V² dominance. Why V-before-F up, F-before-V down? Setup-time slack argument. Why discrete P-states vs continuous? Validation-matrix argument. Snapdragon DVFS through RPMh + PMIC (per-cluster rail vs per-core).
-
-## D12-E2 — DS&A: Best Time to Buy and Sell Stock (LC 121) (`d12_max_profit`)
-
-`int max_profit(const int *prices, int n);` O(n) single pass tracking running min. Edge: empty, monotone-decreasing (profit 0), single. Same shape as a power-counter rolling baseline.
-
----
-
-# Day 13 — C-states / PkgC / S0ix
-
-## D13-E1 — Systems C: C-state request + PkgC6 PCU gate model (`d13_pkgc6`)
-
-**Problem statement.** Model the PCU's PkgC6 gating. 4 cores (`cores[NCORES]`), each with `cstate_t cs` and a `work_pending` flag. `request_core_cs(id, target)` refuses any state deeper than C1 if work is pending. `try_pkg_c6()` checks **all** cores in C6 *and* every uncore IP (`llc_idle`, `mc_idle`, `pcie_in_l1_2`, `display_idle`, `intc_idle`) reports idle. If blocked, print which IP blocks. Default `pcie_in_l1_2 = false` so the first attempt fails.
-
-**Implement:**
-```c
-typedef enum { C0=0, C1=1, C1E=2, C6=6 } cstate_t;
-typedef struct { cstate_t cs; bool work_pending; } core_t;
-typedef struct { bool llc_idle, mc_idle, pcie_in_l1_2, display_idle, intc_idle; } uncore_t;
-
-bool request_core_cs(int id, cstate_t target);
-bool try_pkg_c6(void);
-const char *blocker(void);
-```
-
-**Driver:** All 4 cores → request C6. `try_pkg_c6()` → "BLOCKED: PCIe link not in L1.2". Set `un.pcie_in_l1_2 = true`, retry → "PkgC6 ENTERED".
-
-**Interview prompts:** C1 vs C1E vs C6 vs C10 — clock-gated vs power-gated, retention SRAM, wake latency. Why does PkgC6 need *every* uncore IP idle? Shared-rail and snoop-traffic arguments. Break-even residency $T_r > (E_{\text{in}} + E_{\text{out}}) / \Delta P$. L1.2 dependency for PkgC6; LTR/CLKREQ#/ASPM bring-up checklist.
-
-## D13-E2 — DS&A: Climbing Stairs (LC 70) — reused (`d13_climb_stairs`)
-
-Same as Day 10 — count distinct ways to reach step `n` with steps of 1 or 2. Reused as the path-counting analogue for C-state transitions through a strict-ordering ladder.
-
----
-
-# Day 14 — ADR, PCU, Core C6 bugs
-
-## D14-E1 — Systems C: ADR opcode-sequence simulator (`d14_adr`)
-
-**Problem statement.** Model the PCU's ADR (Asynchronous DRAM Refresh) flow as an opcode sequence. Two versions:
-
-(a) **Buggy** — issues `WPQ_FLUSH` without first waiting for `IO_QUIESCE_ACK`. Model detects this and prints `BUG: WPQ_FLUSH issued before IO_QUIESCE_ACK -> WPQ refills, hang`.
-
-(b) **Fixed** — strict ordering: `IO_QUIESCE` + ack → `FABRIC_QUIESCE` → optional `LLC_WRITEBACK` (eADR) → `WPQ_FLUSH` + ack → `DDR_SELF_REFRESH` → `NVDIMM_SAVE`. Report `in_self_refresh = true` on success.
-
-**Implement:**
-```c
-typedef enum {
-    OP_IO_QUIESCE, OP_IO_QUIESCE_ACK, OP_FABRIC_QUIESCE, OP_LLC_WRITEBACK,
-    OP_WPQ_FLUSH, OP_WPQ_FLUSH_ACK, OP_DDR_SELF_REFRESH, OP_NVDIMM_SAVE, OP_DONE
-} adr_op_t;
-
-typedef struct {
-    bool io_quiesced, fabric_quiesced, wpq_drained, in_self_refresh, eadr;
-} adr_state_t;
-
-int adr_run_buggy(adr_state_t *s);
-int adr_run_fixed(adr_state_t *s);
-```
-
-**Driver:** Buggy → expect failure print. Fixed → expect `rc=0`, `in_self_refresh=1`.
-
-**Interview prompts:** Cambria PCU FW bug (`WPQ_FLUSH` before `IO_QUIESCE_ACK`); Zebu opcode trace; Perspec assertion gating regression. Core C6 wake-lost CFC FIFO race; Lauterbach trigger `wake_in==1 && cfc_init_busy==1`; fix is hold latch in always-on until `init_done && drain_done`. ADR hold-up budget physics (10–30 ms). Why PCU is firmware, not RTL.
-
-## D14-E2 — DS&A: Number of Islands (LC 200) (`d14_num_islands`)
-
-`int num_islands(char **grid, int rows, int cols);` 4-directional flood-fill, BFS or DFS. Edge: empty, all water, all land (1), single cell. O(R·C). Same shape as connected-component analysis on a die-thermal hotspot map or fault-cluster localisation in JTAG scan.
-
----
-
-# Day 15 — Thermal, perf counters, multi-IP
-
-## D15-E1 — Systems C: Tj model + PROCHOT + RAPL delta + IPC (`d15_tj_rapl_tma`)
-
-**Problem statement.** Three composing models for a perf/thermal validation harness.
-
-(a) **Thermal step.** $T_j = T_a + P \cdot \theta_{JA}$ with first-order RC smoothing (tau=5s). On each `dt`, push `tj` toward steady state. Assert PROCHOT when `tj >= prochot`; clear when `tj < prochot - 5` (5°C hysteresis). When throttled, the step uses 75 W instead of 125 W (caller decides, model just observes).
-
-(b) **RAPL delta → watts.** `rapl_watts(e0, e1, unit_uj, dt)` converts a counter delta + LSB-µJ + duration to watts.
-
-(c) **Top-down dominant bucket.** Given fractions `frontend_bound, bad_spec, retiring, mem_bound, core_bound`, return the name of the largest.
-
-**Implement:**
-```c
-typedef struct { double tj, ta, theta, prochot; bool throttled; } thermal_t;
-void thermal_step(thermal_t *m, double power, double dt);
-
-double rapl_watts(uint64_t e0, uint64_t e1, uint64_t unit_uj, double dt);
-
-typedef struct { double frontend_bound, bad_spec, retiring, mem_bound, core_bound; } tma_t;
-const char *tma_dominant(const tma_t *t);
-```
-
-**Driver:** 30-second sim with ambient 25, theta 0.3, prochot 95, power 125 W (throttled → 75) — print PROCHOT enter/clear events, final `tj` and `throttled`. `rapl_watts(0, 65000000, 1, 1.0)` → 65.0 W. TMA `(0.15, 0.05, 0.25, 0.45, 0.10)` → "Backend Memory".
-
-**Interview prompts:** $T_j = T_a + P\theta_{JA}$ as lumped RC; when the model breaks (transient PROCHOT, hotspot). Why RAPL underestimates wall by 20–30%; what closes each gap. Top-down's 4 buckets; what they isolate. HW prefetcher hides missing software prefetch — why disabling HW PF is triage, not fix.
-
-## D15-E2 — DS&A: Sliding Window Maximum (LC 239) — counter-burst peak detector (`d15_sliding_max`)
-
-`int *sliding_max(const int *nums, int n, int k, int *out_len);` O(n) using a monotonic deque of indices. Edge: `k=1`, `k=n`, all-equal, strictly decreasing. Same shape as a perf-counter peak-detector over a rolling window.
-
----
-
-# Day 16 — Pipeline, memory model, SIMD
-
-## D16-E1 — Systems C: pipeline simulator + 2-bit branch predictor + license-level model (`d16_pipeline_bp`)
+## D09 — Pipeline simulator + 2-bit branch predictor + license-level model (`d09_pipeline_bp`)
 
 **Problem statement.** Three small models you can talk through in 60 seconds.
 
@@ -547,17 +291,13 @@ void   pipeline_demo(void);
 
 **Driver:** Stream `{1,1,1,0,1,1,0,1,1,1,0,0,1}` → print BP accuracy. `(1.0, 0, 0, 4.0)` → 4.00 GHz; `(0.9, 0, 0.1, 4.0)` → ~3.90 (note net loss vs pure scalar). `pipeline_demo()` prints the 4-row diagram.
 
-**Interview prompts:** OoO vs in-order; what extracts ILP. TSO vs weak; producer-consumer ring race; `dmb st` between data and flag. AVX-512 license-level pessimisation; when sprinkling AVX-512 is a net loss. HW prefetcher disable (`MSR 0x1A4`) as triage when silicon A passes / B regresses.
-
-## D16-E2 — DS&A: Counting Bits (LC 338) (`d16_count_bits`)
-
-`int *count_bits(int n, int *out_len);` DP recurrence `bits[i] = bits[i >> 1] + (i & 1)`. Edge: `n=0`, `n=1`, large `n`. O(n), beats per-element popcount. Mask-density precomputation for perf counters.
+**Interview prompts:** OoO vs in-order; what extracts ILP. ROB / RS / rename — what each contributes. AVX-512 license-level pessimisation; when sprinkling AVX-512 is a net loss. HW prefetcher disable (`MSR 0x1A4`) as triage when silicon A passes / B regresses.
 
 ---
 
-# Day 17 — Concurrency, lock-free, DSA
+# Day 10 — Memory consistency + atomics
 
-## D17-E1 — Systems C: spinlock + SPSC ring (full) (`d17_spinlock_spsc`)
+## D10 — Spinlock + SPSC ring with acq/rel ordering (`d10_spsc_acqrel`)
 
 **Problem statement.** Two lock-free / lock-light primitives end-to-end.
 
@@ -582,103 +322,424 @@ bool spsc_pop (spsc_t *r, int *v);
 
 **Driver:** Two-thread counter test → expect `200000`. SPSC push 5 squares (`0,1,4,9,16`), drain, print.
 
-**Interview prompts:** 3 atomics guarantees: atomicity, visibility, ordering. `volatile` gives only compiler ordering. Pick weakest correct order; relaxed for counters, acq/rel for locks and producer-consumer flags, seq_cst rarely. Why SPSC needs no CAS; what changes at MPMC. ABA problem; defenses (tagged pointer, hazard pointer, RCU). Cache-line padding between `head`/`tail` is the difference between toy and shipped code.
-
-## D17-E2 — DS&A: Evaluate Reverse Polish Notation (LC 150) (`d17_eval_rpn`)
-
-`int eval_rpn(char **tokens, int n);` Postfix; integer or `+ - * /`. Stack walk. Edge: single number, division truncates toward zero, assume well-formed. O(n). Same shape as walking nested capability chains in PCIe config (Day 10) or matching `BEGIN`/`END` in a debug log.
+**Interview prompts:** TSO vs weak; why ARM needs `dmb ish` between producer data store and tail update. Pick weakest correct order; relaxed for counters, acq/rel for locks and producer-consumer flags, seq_cst rarely. Why SPSC needs no CAS; what changes at MPMC. ABA problem; defenses (tagged pointer, hazard pointer, RCU). Cache-line padding between `head`/`tail` is the difference between toy and shipped code.
 
 ---
 
-# Day 18 — NPU dispatch / EP
+# Day 11 — CPU bring-up + IP functional val
 
-## D18-E1 — Systems C: NPU host harness model (`d18_npu_dispatch`)
+## D11 — CPU bring-up 9-stage ladder simulator (`d11_cpu_bringup_ladder`)
 
-**Problem statement.** Tiny simulator of the host side of NPU dispatch. Each `op_t` says whether it is `npu_supported`. `run_graph(graph, n, &stats)` walks the ops, assigns each to NPU or CPU EP, charges latency per op (NPU = 0.2 µs, CPU = 5.0 µs), and adds a 50 µs "tensor copy" cost at every EP boundary (transition from one EP to the other). Track `total_ops, npu_ops, cpu_ops, partition_boundaries, sim_latency_us`.
+**Problem statement.** Model the canonical CPU IP bring-up ladder as a small state machine. Each stage has a `ready` flag and an ordered list of prerequisites; advancing requires the previous stage to be ready. Validation checks include illegal-skip detection, retry-on-fail, and a final "boot reached" assertion.
 
-Use it to demonstrate the **silent EP fallback cliff**: a clean 6-op graph runs on NPU; inserting a single unsupported `CustomOp` adds two EP boundaries and ~100 µs of pure copy cost.
-
-**Implement:**
-```c
-typedef enum { EP_NPU, EP_CPU } ep_t;
-typedef struct { const char *name; bool npu_supported; int flops; } op_t;
-typedef struct { int total_ops, npu_ops, cpu_ops, partition_boundaries; double sim_latency_us; } stats_t;
-void run_graph(const op_t *graph, int n, stats_t *s);
-```
-
-**Driver:** Clean graph: `Conv1, Relu1, Conv2, Add, Conv3, Softmax` (all NPU-supported) → 0 boundaries. Fallback graph: insert `{"CustomOp", false, 1}` after `Relu1` → 2 boundaries, ~100 µs added. Print `[CLEAN]` and `[FALLBACK]` summaries.
-
-**Interview prompts:** 6-layer stack (Framework → ONNX → ORT → EP → vendor runtime → silicon). QDQ fusion; what happens when QDQ doesn't fuse. VTCM tile-size cliff; why it's sharp not smooth. Context cache; why first-frame cost is seconds without it. Why NPU at all (energy/MAC table vs CPU AVX-512 / GPU SIMT).
-
-## D18-E2 — DS&A: Top-K Frequent Elements (LC 347) (`d18_top_k`)
-
-`int *top_k_frequent(const int *nums, int n, int k, int *out_len);` Bucket sort by frequency in O(n). Edge: `k=1`, all unique, all same, ties broken arbitrarily. Same shape as bucketing kernel-launch counts when triaging an EP-fallback log.
-
----
-
-# Day 19 — NPU memory / runtime / scheduling
-
-## D19-E1 — Systems C: NPU regression-gate harness (`d19_regression_gate`)
-
-**Problem statement.** Build `gate_check(g, r)` that takes a `gate_t` of thresholds and a `run_t` of measured values from one inference run, prints a `FAIL` line for each violated metric, and returns overall pass/fail.
-
-Metrics tracked: `npu_op_pct (≥)`, `page_faults (≤)`, `peak_vm_mb (≤)`, `per_tile_ms (≤)`, `s0ix_residency_pct (≥)`. Use these to score three runs (known-good, regressed, fallback-only) and prove the gate catches each different failure mode.
+**Stages (in order):**
+1. `RESET_DEASSERTED` — POR drops, scan chains clear.
+2. `CLOCKS_STABLE` — PLL locked, refclk gated through.
+3. `RAMS_BIST` — internal SRAM BIST passes (fuses programmed).
+4. `MMU_ENABLED` — TTBR/CR3 written, walker active.
+5. `CACHE_ENABLED` — L1I/L1D/L2 enabled in correct order.
+6. `INT_CONTROLLER_UP` — GIC/APIC dispatch online.
+7. `TIMERS_ONLINE` — generic timer / TSC running.
+8. `SMP_RELEASED` — secondary cores released from holding pen (PSCI `CPU_ON` / x86 SIPI).
+9. `BOOT_REACHED` — first user-mode instruction retired.
 
 **Implement:**
 ```c
-typedef struct { const char *ep_version, *ort_version, *model_build;
-                 int npu_op_pct, page_faults, peak_vm_mb;
-                 double per_tile_ms; int s0ix_residency_pct; } run_t;
-typedef struct { int min_npu_op_pct, max_page_faults, max_peak_vm_mb;
-                 double max_per_tile_ms; int min_s0ix_residency_pct; } gate_t;
-bool gate_check(const gate_t *g, const run_t *r);
-```
+typedef enum {
+    STG_RESET_DEASSERTED, STG_CLOCKS_STABLE, STG_RAMS_BIST,
+    STG_MMU_ENABLED, STG_CACHE_ENABLED, STG_INT_CONTROLLER_UP,
+    STG_TIMERS_ONLINE, STG_SMP_RELEASED, STG_BOOT_REACHED, STG_NUM
+} stage_t;
 
-**Driver:** Gate: `min_npu_op_pct=90, max_page_faults=10000, max_peak_vm_mb=350, max_per_tile_ms=4.0, min_s0ix=80`.
-Run A (known-good): `(95, 7045, 300, 3.0, 85)` → PASS.
-Run B (regressed): `(92, 102445, 502, 3.1, 84)` → FAIL on page faults + VM.
-Run C (fallback): `(40, 8000, 310, 5.0, 84)` → FAIL on npu_op_pct + per_tile_ms.
+typedef struct { bool ready[STG_NUM]; int retries[STG_NUM]; } bringup_t;
 
-**Interview prompts:** QNN/ORT page-fault story (~100K minor faults, VM 300→500 MB) — version-matrix isolation, "page faults alone are not the bug, correlate with virtual-alloc." Paint SR vs Camera (single non-preemptive HTP queue, 108 ms wait in GPUView). Fix is framework priority lanes, not silicon preempt. Silent EP fallback after rebuild without `keep_quantized_weights=true`. NPU keep-alive blocking PkgC10/S0ix. "Never blame silicon first."
-
-## D19-E2 — DS&A: LRU Cache (LC 146) — reused (`d19_lru_cache`)
-
-Same as Day 4 — O(1) LRU. Reused as the data structure backing an EP context cache. Move-to-front on `get` matters for production NPU runtimes that re-use compiled artifacts.
-
----
-
-# Day 20 — Debug methodology
-
-## D20-E1 — Systems C: debug-log triage helper (`d20_triage`)
-
-**Problem statement.** `triage(repro_rate, unique_units, corner_dependent)` classifier:
-
-- `CLASS_FUNCTIONAL` — design/FW (`repro_rate ≥ 0.99`)
-- `CLASS_RACE` — race/timing (`repro_rate < 0.50`)
-- `CLASS_CORNER` — PVT (V/T/process) when corner_dependent and seen on multiple units
-- `CLASS_DEFECT` — silicon defect (single unit)
-- `CLASS_UNKNOWN` — otherwise
-
-Print a small table over a fixed list of reports.
-
-**Implement:**
-```c
-typedef enum { CLASS_FUNCTIONAL, CLASS_RACE, CLASS_CORNER, CLASS_DEFECT, CLASS_UNKNOWN } class_t;
-const char *class_name(class_t c);
-class_t triage(double repro_rate, int unique_units, int corner_dependent);
-
-typedef struct { const char *name; double repro; int units; int corner; } report_t;
+bool advance(bringup_t *b, stage_t next);   /* returns false on illegal skip */
+bool inject_fail(bringup_t *b, stage_t at, int max_retries);
+void report(const bringup_t *b);
 ```
 
 **Driver:**
-- `{"ADR hang on Zebu",       1.00, 5, 0}` → FUNCTIONAL
-- `{"C6 ARAT wake loss",      0.05, 4, 0}` → RACE
-- `{"V-droop crash @105C",    0.40, 6, 1}` → CORNER
-- `{"Single-unit boot fail",  0.95, 1, 0}` → DEFECT
-- `{"NVMe CSTS.RDY hang",     1.00, 3, 0}` → FUNCTIONAL
+- Walk all 9 stages in order → `BOOT_REACHED`.
+- Try `STG_RESET_DEASSERTED → STG_MMU_ENABLED` directly → `ILLEGAL_SKIP: clocks not stable, RAMs not BIST'd`.
+- Inject one failure at `STG_RAMS_BIST` with `max_retries=2` → recovers and continues.
 
-**Interview prompts:** 7-step framework: observe → reproduce → isolate → hypothesise → test → root-cause → fix. Reproducibility rate maps to bug class (100% / intermittent / corner / single-unit). Cost rises 10× per stage RTL → emul → FPGA → post-Si. Bug-story shape: symptom → hypothesis → bounding experiment → fix → regression test, ≤90 sec. Honest framing ("platform validation, not Hexagon RTL").
+**Interview prompts:** Why this exact stage order — what breaks if you flip MMU and cache? What does an "IP functional val" team own at each stage (vplan, coverage, checkers)? Three coverage flavors (code, functional, assertion) and which one catches a missed stage. The 7-step bug-cost ladder (RTL sim → emul → FPGA → silicon → field) — where each catch costs.
 
-## D20-E2 — DS&A: Number of Islands (LC 200) — reused (`d20_num_islands`)
+---
 
-Same as Day 14 — 4-connected `'1'` regions. Reused as the canonical "isolation" pattern; also models clustering of fault sites in scan dump.
+# Day 12 — DVFS / P-states / PVT
+
+## D12 — DVFS table lookup with thermal cap + IPC counter (`d12_dvfs`)
+
+**Problem statement.** Build a DVFS controller. Given a 5-entry P-state table (P4..P0 from `(400 MHz, 750 mV)` to `(2400 MHz, 1150 mV)`), implement `select_opp(target_mhz, tj_c)` that picks the lowest OPP meeting target frequency, **capped to ≤1200 MHz when `tj_c >= 90`** (thermal throttle). Then `apply_opp(cur, next)` that prints the correct sequencing — **V before F when ramping up, F before V when ramping down**.
+
+Plus a tiny `pmu_t { insns, cycles }` and `ipc()` helper.
+
+**Implement:**
+```c
+typedef struct { uint32_t freq_mhz; uint32_t volt_mv; } opp_t;
+const opp_t *select_opp(uint32_t target_mhz, int tj_c);
+void         apply_opp(const opp_t *cur, const opp_t *next);
+
+typedef struct { uint64_t insns, cycles; } pmu_t;
+double ipc(const pmu_t *p);
+```
+
+**Driver:** OPP for `(400, 50)`, then `(2000, 50)` → ramp-up sequence printed. `(2400, 95)` → thermal cap to 1200 MHz, ramp-down sequence printed. IPC for `insns=15e9, cycles=12.34e9` and flag if `< 1.0`.
+
+**Interview prompts:** Derive $P_{dyn} = \tfrac{1}{2}CV^2F$; explain V² dominance. Why V-before-F up, F-before-V down? Setup-time slack argument. Why discrete P-states vs continuous? Validation-matrix argument. Why governors exist (HW sees load, not intent). AVS / PVT — what does the real-time sensor close that fuses can't.
+
+---
+
+# Day 13 — C-states / PkgC / S0ix
+
+## D13 — C-state request + PkgC6 PCU gate model (`d13_pkgc6_gate`)
+
+**Problem statement.** Model the PCU's PkgC6 gating. 4 cores (`cores[NCORES]`), each with `cstate_t cs` and a `work_pending` flag. `request_core_cs(id, target)` refuses any state deeper than C1 if work is pending. `try_pkg_c6()` checks **all** cores in C6 *and* every uncore IP (`llc_idle`, `mc_idle`, `pcie_in_l1_2`, `display_idle`, `intc_idle`) reports idle. If blocked, print which IP blocks. Default `pcie_in_l1_2 = false` so the first attempt fails.
+
+**Implement:**
+```c
+typedef enum { C0=0, C1=1, C1E=2, C6=6 } cstate_t;
+typedef struct { cstate_t cs; bool work_pending; } core_t;
+typedef struct { bool llc_idle, mc_idle, pcie_in_l1_2, display_idle, intc_idle; } uncore_t;
+
+bool request_core_cs(int id, cstate_t target);
+bool try_pkg_c6(void);
+const char *blocker(void);
+```
+
+**Driver:** All 4 cores → request C6. `try_pkg_c6()` → "BLOCKED: PCIe link not in L1.2". Set `un.pcie_in_l1_2 = true`, retry → "PkgC6 ENTERED". *(This blocker pattern is the seed of the Day 22 PCIe×PM intersection exercise.)*
+
+**Interview prompts:** C1 vs C1E vs C6 vs C10 — clock-gated vs power-gated, retention SRAM, wake latency. Why does PkgC6 need *every* uncore IP idle? Shared-rail and snoop-traffic arguments. Break-even residency $T_r > (E_{\text{in}} + E_{\text{out}}) / \Delta P$. L1.2 dependency for PkgC6; LTR/CLKREQ#/ASPM bring-up checklist.
+
+---
+
+# Day 14 — Clock + power gating + UPF
+
+## D14 — 3-domain UPF power model with SAVE/ISO/RESTORE asserts (`d14_upf_domain_model`)
+
+**Problem statement.** Model three power domains (`ALWAYS_ON`, `CPU_CLUSTER`, `GPU`) with proper UPF-style sequencing. Each domain has `power`, `iso`, `retention_valid` flags. Power-down sequence: assert `iso` → assert `clamp` → save retention flops → drop power. Power-up sequence: restore power → wait for stable → restore from retention → de-assert `clamp` → de-assert `iso`. The model includes **assertions** that fail loudly if any step is skipped.
+
+**Required violations to demonstrate:**
+- Dropping power before `iso` is asserted → `ASSERT FAIL: outputs floating, downstream X-propagation`.
+- De-asserting `iso` before power is back → `ASSERT FAIL: spurious enable into clamp`.
+- Skipping retention save → `ASSERT FAIL: state lost across power cycle`.
+
+**Implement:**
+```c
+typedef struct {
+    const char *name;
+    bool powered, iso_asserted, retention_valid;
+    uint32_t saved_state;   /* stand-in for retained flop content */
+} pdomain_t;
+
+bool power_down(pdomain_t *d);     /* enforces SAVE → ISO → CLAMP → POWER_OFF */
+bool power_up  (pdomain_t *d);     /* enforces POWER_ON → RESTORE → CLAMP_OFF → ISO_OFF */
+bool assert_safe(const pdomain_t *d, const char *step);
+```
+
+**Driver:**
+- Normal cycle on `GPU`: down then up; print every step and final state == saved state.
+- Inject `bad_power_down()` that drops power before `iso` → assertion fires.
+- Show the **ICG** notion as a one-line stand-in: only the CPU_CLUSTER domain's free-running clock toggles when not gated; assert "0 toggles when gate de-asserted".
+
+**Interview prompts:** ICG cells — why latch-and-AND instead of plain AND. Header vs footer FET tradeoffs (Vt, leakage, layout). Retention flop = master-slave with always-on slave; why not just SRAM. Isolation cell purpose, where in the boundary. Level shifters between domain voltages. UPF (IEEE 1801) — what does the declaration give the synthesis + LP-sim flow that RTL can't.
+
+---
+
+# Day 15 — Thermal, perf counters, multi-IP
+
+## D15 — Tj model + PROCHOT + RAPL delta + TMA bucket (`d15_tj_rapl_tma`)
+
+**Problem statement.** Three composing models for a perf/thermal validation harness.
+
+(a) **Thermal step.** $T_j = T_a + P \cdot \theta_{JA}$ with first-order RC smoothing (tau=5s). On each `dt`, push `tj` toward steady state. Assert PROCHOT when `tj >= prochot`; clear when `tj < prochot - 5` (5°C hysteresis). When throttled, the step uses 75 W instead of 125 W (caller decides, model just observes).
+
+(b) **RAPL delta → watts.** `rapl_watts(e0, e1, unit_uj, dt)` converts a counter delta + LSB-µJ + duration to watts.
+
+(c) **Top-down dominant bucket.** Given fractions `frontend_bound, bad_spec, retiring, mem_bound, core_bound`, return the name of the largest.
+
+**Implement:**
+```c
+typedef struct { double tj, ta, theta, prochot; bool throttled; } thermal_t;
+void thermal_step(thermal_t *m, double power, double dt);
+
+double rapl_watts(uint64_t e0, uint64_t e1, uint64_t unit_uj, double dt);
+
+typedef struct { double frontend_bound, bad_spec, retiring, mem_bound, core_bound; } tma_t;
+const char *tma_dominant(const tma_t *t);
+```
+
+**Driver:** 30-second sim with ambient 25, theta 0.3, prochot 95, power 125 W (throttled → 75) — print PROCHOT enter/clear events, final `tj` and `throttled`. `rapl_watts(0, 65000000, 1, 1.0)` → 65.0 W. TMA `(0.15, 0.05, 0.25, 0.45, 0.10)` → "Backend Memory".
+
+**Interview prompts:** $T_j = T_a + P\theta_{JA}$ as lumped RC; when the model breaks (transient PROCHOT, hotspot). Why RAPL underestimates wall by 20–30%; what closes each gap. Top-down's 4 buckets; what they isolate. HW prefetcher hides missing software prefetch — why disabling HW PF is triage, not fix. Leakage-temperature runaway and why throttle is the *negative feedback* that breaks the loop.
+
+---
+
+# Day 16 — Pre-Si PM validation
+
+## D16 — PM coverage tracker (state × transition × residency) (`d16_pm_coverage_tracker`)
+
+**Problem statement.** Build the **3-axis coverage tracker** described in the Day 16 reading. As the model receives a stream of `(core_id, from_state, to_state, dwell_us)` events, it must maintain:
+
+(a) **State coverage** — which (`C0`, `C1`, `C1E`, `C6`, `C10`) states each core has been observed in.
+(b) **Transition coverage** — which `from → to` pairs have fired. Use the legal-transition table from Day 13.
+(c) **Residency-bin coverage** — for each state, did the core hit `short` (<10 µs), `medium` (10-1000 µs), `long` (>1 ms) dwell bins.
+
+At end of run, print a coverage report and flag any axis below 80% coverage as a regression-blocker. Detect **two illegal transitions** in the input stream and emit `SVA_FAIL: illegal transition C0 → C6 (must pass through C1 first)`.
+
+**Implement:**
+```c
+typedef enum { C0=0, C1, C1E, C6, C10, CSTATE_NUM } cstate_t;
+typedef enum { BIN_SHORT=0, BIN_MED, BIN_LONG, BIN_NUM } resbin_t;
+
+typedef struct {
+    bool state_seen[CSTATE_NUM];
+    bool trans_seen[CSTATE_NUM][CSTATE_NUM];
+    bool resbin_seen[CSTATE_NUM][BIN_NUM];
+    int sva_fails;
+} coverage_t;
+
+void record_event(coverage_t *c, int core, cstate_t from, cstate_t to, double dwell_us);
+void report_coverage(const coverage_t *c);
+```
+
+**Driver:** Generate a 50-event stream covering 4 of 5 states, 12 of legal transitions, 2 of 3 bins for C6, all 3 for C0. Plant two illegal transitions. Expect: state 80%, transition ~60% (flag), residency mixed. Print the regression-blocker summary.
+
+**Interview prompts:** Why the 3-axis frame and not just state coverage? The 6 mandatory PM SVAs (SAVE-before-power-down, ISO-before-clamp-release, illegal C-state transition, residency-min, wake-latency-max, no-wake-during-save). Perspec for cross-IP PM scenarios. LP-sim (VC-LP / Conformal-LP) versus functional sim. PCU opcode trace as the golden-ref for the post-Si side (Day 17).
+
+---
+
+# Day 17 — Post-Si PM validation + ADR/C6 bugs
+
+## D17a — Wrap-safe residency-counter delta parser (`d17_residency_delta`)
+
+**Problem statement.** Build the post-Si tool that reads C-state residency MSRs at two timestamps and computes the percent of wall-clock time spent in each state, *correctly handling counter wrap*. The MSR is a 64-bit free-running TSC-counted residency register; reading at `t0` and `t1` (with `t1 - t0` in TSC ticks) gives `(end - start) mod 2^64` ticks resident. Compute `pct = 100.0 * residency_delta / wall_tsc_delta` for each state and print a `turbostat`-style row.
+
+**Required edge cases:**
+- Counter wrap: `start = 0xFFFF_FFFF_FFFF_FF00`, `end = 0x100`. Delta must be `0x200` (not negative).
+- Residency exceeds wall (impossible) → flag as `SANITY: residency > wall, MSR mis-programmed`.
+- All cores aggregated: per-core columns plus package total.
+
+**Implement:**
+```c
+typedef struct {
+    uint64_t cc3, cc6, cc7;       /* core-C residency */
+    uint64_t pc2, pc6, pc10;      /* package-C residency */
+    uint64_t tsc;                 /* free-running ref */
+} msr_snap_t;
+
+uint64_t wrap_delta(uint64_t end, uint64_t start);
+void     print_row(const char *label, const msr_snap_t *t0, const msr_snap_t *t1);
+```
+
+**Driver:** Two snapshots 1 second apart, plant a counter-wrap on `cc6`, plant an over-100% on `pc6`. Expect: correct CC6 percentage despite wrap, sanity warning on PC6.
+
+**Interview prompts:** The 8-stage post-Si PM bring-up ladder (silicon → BIOS PM → ACPI tables → kernel governor → user workload → measurement → MSR sweep → bug isolation). turbostat / socwatch / `rdmsr` / `wrmsr` / RAPL / Quarch / Lauterbach — what each tool sees that the others don't. The 7-step debug framework. The **ADR opcode-ordering bug** and the **Core C6 wake-loss bug** — be ready to tell each as a 90-sec story.
+
+## D17b — *(optional)* ADR opcode-sequence simulator (`d17_adr`)
+
+**Problem statement.** Model the PCU's ADR (Asynchronous DRAM Refresh) flow as an opcode sequence. Two versions:
+
+(a) **Buggy** — issues `WPQ_FLUSH` without first waiting for `IO_QUIESCE_ACK`. Model detects this and prints `BUG: WPQ_FLUSH issued before IO_QUIESCE_ACK -> WPQ refills, hang`.
+
+(b) **Fixed** — strict ordering: `IO_QUIESCE` + ack → `FABRIC_QUIESCE` → optional `LLC_WRITEBACK` (eADR) → `WPQ_FLUSH` + ack → `DDR_SELF_REFRESH` → `NVDIMM_SAVE`. Report `in_self_refresh = true` on success.
+
+**Implement:**
+```c
+typedef enum {
+    OP_IO_QUIESCE, OP_IO_QUIESCE_ACK, OP_FABRIC_QUIESCE, OP_LLC_WRITEBACK,
+    OP_WPQ_FLUSH, OP_WPQ_FLUSH_ACK, OP_DDR_SELF_REFRESH, OP_NVDIMM_SAVE, OP_DONE
+} adr_op_t;
+typedef struct { bool io_quiesced, fabric_quiesced, wpq_drained, in_self_refresh, eadr; } adr_state_t;
+int adr_run_buggy(adr_state_t *s);
+int adr_run_fixed(adr_state_t *s);
+```
+
+**Driver:** Buggy → expect failure print. Fixed → expect `rc=0`, `in_self_refresh=1`.
+
+**Interview prompts:** Cambria-style ADR FW bug (`WPQ_FLUSH` before `IO_QUIESCE_ACK`); Zebu opcode trace; Perspec assertion gating regression. Core C6 wake-lost CFC FIFO race; Lauterbach trigger `wake_in==1 && cfc_init_busy==1`; fix is hold latch in always-on until `init_done && drain_done`. ADR hold-up budget physics (10-30 ms). Why PCU is firmware, not RTL.
+
+---
+
+# Day 18 — PCIe fundamentals + LTSSM
+
+## D18 — LTSSM walker (`d18_ltssm_walk`)
+
+**Problem statement.** Define the 10 LTSSM states (Detect, Polling, Config, L0, Recovery, L0s, L1, L1.1, L1.2, L2). Build an allowed-transition table. `go(link, to)` enforces legality, prints transitions, counts `recoveries` whenever entering Recovery. Add a `bar_size_from_readback(uint32_t rb)` helper as an aside: write `0xFFFFFFFF` to BAR, read back, mask type bits, invert and add 1 to get size — Day 19 will reuse it.
+
+**Implement:**
+```c
+typedef enum { LTSSM_DETECT, LTSSM_POLLING, LTSSM_CONFIG, LTSSM_L0,
+               LTSSM_RECOVERY, LTSSM_L0S, LTSSM_L1, LTSSM_L1_1,
+               LTSSM_L1_2, LTSSM_L2, LTSSM_NUM } ltssm_t;
+typedef struct { ltssm_t st; unsigned recoveries; } link_t;
+bool     go(link_t *l, ltssm_t to);
+uint64_t bar_size_from_readback(uint32_t rb);
+```
+
+**Driver:** Walk `Detect → Polling → Config → L0 → Recovery → L0 → L1 → L1.2 → Recovery → L0`. One illegal `Detect → L0` → `ILLEGAL`. `bar_size_from_readback(0xFFF00004)` → `0x100000`.
+
+**Interview prompts:** 3 PCIe layers (PHY/DLL/TL); what each isolates. Posted vs non-posted; why doorbell-as-MWr won. L1 vs L1.1 vs L1.2; PkgC6 dependency on L1.2. Credit-based flow control vs ACK/NAK pacing. Gen6 FLIT and L0p — what changed.
+
+---
+
+# Day 19 — PCIe enumeration, config, BARs, MSI/MSI-X
+
+## D19 — Enumeration walker model (`d19_enum_walker`)
+
+**Problem statement.** Model the BIOS/UEFI depth-first enumeration walk. Given a fake `(bus, dev, fn)` tree, walk every function, read its config header type, recurse on bridges (type-1), program BAR sizes via the write-all-1s trick, build a tree of discovered devices. Track:
+- bridge windows (mem, prefetch, IO) and the **must-be-power-of-2-and-aligned** rule.
+- MSI vs MSI-X capability presence (walk the capability chain).
+- bus-number assignment with the **secondary/subordinate** range.
+
+**Implement:**
+```c
+typedef struct { uint16_t vid, did; uint8_t header_type;
+                 uint32_t bar[6]; bool msi, msix; } func_t;
+typedef struct { uint8_t bus, dev, fn; func_t f; } node_t;
+typedef struct { node_t *nodes; int count; } tree_t;
+
+void enumerate(uint8_t bus, tree_t *out);
+uint64_t bar_size(uint32_t bar_readback);       /* reuse Day 18 helper */
+void program_bridge_window(node_t *bridge, uint64_t mem_base);
+```
+
+**Driver:** Fake 3-bus topology (root → bridge → 2 endpoints), one endpoint with MSI-X. Run `enumerate(0, &t)`. Expect: 4 functions discovered, bridge windows computed, MSI-X table BIR/offset printed.
+
+**Interview prompts:** Why depth-first and not breadth-first? Header types 0/1/2 — which is endpoint, which is bridge. BAR sizing trick: why write-all-1s works (decoder ties low bits). MSI vs MSI-X scaling argument. Capability chain — linked list at offset 0x34, why this format. Bridge window rules — alignment, prefetch vs non-prefetch.
+
+---
+
+# Day 20 — PCIe power management (ASPM / L1.2)
+
+## D20 — ASPM / L1.2 FSM with CLKREQ# ordering asserts (`d20_aspm_l12_fsm`)
+
+**Problem statement.** Build the ASPM state machine focused on **L1.2 entry and exit**, with strict side-band timing assertions. Track:
+- link state (`L0`, `L0s`, `L1`, `L1.1`, `L1.2`)
+- `CLKREQ#` (active-low, so model as `clkreq_asserted` boolean)
+- `refclk_on`, `vcm_held` flags
+
+**Required ordering** (any violation = `ASSERT FAIL`):
+- **Entry to L1.2**: enter L1 → enter L1.1 → de-assert CLKREQ# → wait T_POWER_OFF (model with a tick counter) → drop refclk and Vcm → state = L1.2.
+- **Exit from L1.2**: re-assert CLKREQ# → wait T_CLKREQ_TO_REFCLK → refclk valid → Vcm valid → wait T_L1.2.EXIT (typically ~10 µs) → state = L0.
+
+Plant violations:
+- Drop refclk before CLKREQ# de-asserts → `ASSERT FAIL: CLKREQ# must precede refclk gate`.
+- Send TLP before L1.2 exit completes → `ASSERT FAIL: TLP during L1.2 exit`.
+
+**Implement:**
+```c
+typedef enum { ASPM_L0, ASPM_L0S, ASPM_L1, ASPM_L1_1, ASPM_L1_2 } aspm_t;
+typedef struct {
+    aspm_t st;
+    bool clkreq_asserted;   /* true == active-low asserted */
+    bool refclk_on, vcm_held;
+    int  tick;
+} aspm_link_t;
+
+bool enter_l12(aspm_link_t *l);
+bool exit_l12 (aspm_link_t *l);
+bool send_tlp (aspm_link_t *l);   /* must be in L0 */
+```
+
+**Driver:** Clean entry+exit cycle. Then plant violation: drop refclk before CLKREQ#. Then plant: TLP during exit window.
+
+**Interview prompts:** ASPM ladder L0/L0s/L1/L1.1/L1.2 — what each level gates (link, refclk, Vcm, CLKREQ#). Why L1.2 is the **deepest** and why platform PkgC10 depends on it. LTR — what does the EP advertise and what does the RC do with it. D-states vs L-states — orthogonal axes. PME path on exit. The two timing constants `T_POWER_OFF` and `T_L1.2.EXIT` — why they exist physically.
+
+---
+
+# Day 21 — PCIe bring-up + functional val
+
+## D21 — LTSSM stuck-state classifier (`d21_ltssm_stuck_classifier`)
+
+**Problem statement.** Build the post-Si tool that takes an LTSSM state snapshot + symptom set and classifies the likely root cause. Input is `{ltssm_t stuck_in, bool refclk_present, bool perst_released, int lanes_detected, int target_lanes, gen_t target_gen, gen_t actual_gen, bool eq_phase_failed}`. Output one of:
+
+- `STUCK_DETECT` — refclk missing OR PERST# stuck asserted OR receiver detect failing.
+- `STUCK_POLLING` — TS1/TS2 not exchanged; check lane reversal, polarity inversion, ref-clock spread-spectrum mismatch.
+- `STUCK_CONFIG` — lane count mismatch (target 16, detected 8 → bad solder or broken lane).
+- `STUCK_RECOVERY` — equalization Phase 2/3 failed, signal-integrity issue.
+- `STUCK_SPEED` — reached L0 but at lower gen than target (EQ Phase 0 floor only).
+- `STUCK_UNKNOWN`.
+
+For each, print the next debug action (`scope on REFCLK`, `Lecroy analyser TS1 capture`, `re-run EQ with relaxed preset`, etc.).
+
+**Implement:**
+```c
+typedef enum { STUCK_DETECT, STUCK_POLLING, STUCK_CONFIG,
+               STUCK_RECOVERY, STUCK_SPEED, STUCK_UNKNOWN } stuck_class_t;
+typedef enum { GEN1=1, GEN2, GEN3, GEN4, GEN5, GEN6 } gen_t;
+
+typedef struct {
+    ltssm_t stuck_in;
+    bool refclk_present, perst_released, eq_phase_failed;
+    int  lanes_detected, target_lanes;
+    gen_t target_gen, actual_gen;
+} symptom_t;
+
+stuck_class_t classify(const symptom_t *s);
+const char *next_action(stuck_class_t c);
+```
+
+**Driver:** 5 canned symptom sets — one per class except UNKNOWN. Expect 5 correct classifications and 5 next-action lines.
+
+**Interview prompts:** The 10-step bring-up ladder (PERST# → refclk → Detect → ... → L0 @ target gen). LTSSM stuck-state diagnostic table — what symptom maps to which state. Gen3+ equalisation 4 phases (Phase 0 floor, Phase 1 TX preset, Phase 2 RX tuning, Phase 3 final). AER categories (correctable, non-fatal, fatal) and what each tells you. Compliance test mode (loopback master/slave). Lecroy / Teledyne PETrainer / Keysight scope — what each catches.
+
+---
+
+# Day 22 — PCIe × PM intersection
+
+## D22 — PkgC blocker arbiter (`d22_pkgc_blocker_arbiter`)
+
+**Problem statement.** This is the post-Si tool for the *most-asked debug question* of the role: "platform never enters PkgC10, what's blocking it?" Build an arbiter that aggregates votes from every IP that participates in deep-idle gating and prints the **dependency chain** of blockers, not just the leaf cause.
+
+Inputs:
+- per-core C-state.
+- each PCIe link's ASPM state (must be L1.2 for PkgC10).
+- LTR values from each EP (a too-aggressive LTR forces RC to stay shallow).
+- USB host controller idle vote.
+- Display engine idle vote.
+- Memory controller self-refresh vote.
+
+Output: `PkgC10 BLOCKED by: PCIe link 03:00.0 (state L1, EP LTR=10 µs forces shallow) → Storage NVMe EP keep-alive → driver hint stuck`.
+
+**Implement:**
+```c
+typedef enum { PKG_C0=0, PKG_C2, PKG_C6, PKG_C10 } pkg_state_t;
+
+typedef struct {
+    const char *bdf;
+    aspm_t state;
+    int    ltr_us;   /* lower = "wake me sooner", forces shallower PkgC */
+} pcie_vote_t;
+
+typedef struct {
+    int n_cores; cstate_t core_cs[8];
+    int n_links; pcie_vote_t links[16];
+    bool usb_idle, display_idle, mc_self_refresh;
+} platform_t;
+
+pkg_state_t arbitrate(const platform_t *p, char *why, size_t whysz);
+```
+
+**Driver:** Three scenarios:
+1. Everything idle, all links in L1.2, LTRs ≥ 1 ms → `PKG_C10`.
+2. One link in L1 with LTR=10 µs → `PKG_C6` with blocker explanation.
+3. USB host not idle → `PKG_C2` with blocker explanation.
+
+**Interview prompts:** The PkgC6 / PkgC10 blocker chain — what each leaf vote means. L1.2 ↔ PkgC10 handshake (10-step: kernel → governor → PMC → RC → EP → CLKREQ# → ...). Deadlock farm: cyclic LTR negotiation, stuck CLKREQ#, half-gated rail. The retained **ADR ↔ PkgC** recap (Day 17 bug shows up here as cross-IP). The **L0p mid-FLIT** Gen6 bug — what it costs at PM intersection. 10-step debug playbook for "no PkgC10".
+
+---
+
+# Days 23-24 — Wrap
+
+No new exercises. Re-run any 2-3 of D08 / D11 / D17 / D20 / D22 cold, on a clean checkout, as warm-ups before the loop.
+
+- **Day 23** is the MSFT/NPU exit-pointer day; the only coding tie-in is to re-read [d06_page_walk](solutions/d06_page_walk.c) so the QNN page-fault story flows.
+- **Day 24** is the final timed mock loop; the exercises are the *content* you point at in the resume walk-through, not new code.
+
+---
+
+## Reading map
+
+Every day file lives in [../prep_plan/](../prep_plan/). Architect drills, bring-up flow, tools (pre-Si + post-Si), and bug anchors are in the day file — coding is in this file. Don't duplicate; cross-link.
