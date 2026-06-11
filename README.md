@@ -14,7 +14,7 @@ Systems-C exercises and reference solutions for the 25-day silicon-validation in
 - Thermal + RAPL + TMA; PM coverage tracker; residency-delta MSR parser.
 - ADR opcode model; LTSSM walker; PCIe enumeration; ASPM/L1.2 FSM; LTSSM stuck classifier; PkgC blocker arbiter.
 
-Each exercise has a `d00_*.c` solution under [solutions/](solutions/) and is buildable via the top-level [Makefile](Makefile).
+**State of this tree (living backlog):** Day 0 (`d00_*.c`) has runnable reference solutions under [solutions/](solutions/), buildable via the [Makefile](Makefile). For Days 1-22, the reference code lives **inline** in [EXERCISES.md](EXERCISES.md) and the matching [`prep_plan/dayNN_*.md`](../prep_plan/) reading file — it is extracted into runnable `solutions/dNN_*.c` files incrementally, on demand (e.g. when a real debug task or interview makes that model worth running). This is intentional: the knowledge base grows as roles surface the need, not as a synthetic up-front sweep.
 
 ## Layout
 

@@ -1,6 +1,8 @@
 # Coding — Single Exercise Document
 
-> One folder, one document. All 25 days of coding live here. Systems-C only. Read the prompt, write the code in `exercises/dNN_<name>.c`, build, run, explain *why*. Only then peek at `solutions/dNN_<name>.c`.
+> One folder, one document. All 25 days of coding live here. Systems-C only. Read the prompt, write the code in `exercises/dNN_<name>.c`, build, run, explain *why*, then check it against the reference.
+>
+> **Where the reference lives:** Day 0 has runnable files in [solutions/](solutions/). For Days 1-22 the reference solution is inline in this document (under each day's heading) and is extracted into a runnable `solutions/dNN_*.c` only when you choose to — this tree fills in incrementally as you expand the knowledge base on the job.
 
 This file is the coding companion to [prep_plan/README.md](../prep_plan/README.md). The plan is **25 days, no DSA, no LeetCode** — every exercise is a bit/CSR/FSM/PM/PCIe systems-C model tied to the day's reading.
 

@@ -1,4 +1,4 @@
-# Unified coding workspace for the 21-day prep.
+# Unified coding workspace for the 25-day prep.
 #
 # Layout:
 #   exercises/   YOU write code here.   Files: dNN_<name>.c
