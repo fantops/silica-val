@@ -1,10 +1,10 @@
 # Coding — Single Exercise Document
 
-> One folder, one document. All 25 days of coding live here. Systems-C only. Read the prompt, write the code in `exercises/dNN_<name>.c`, build, run, explain *why*, then check it against the reference.
+> One folder, one document. All 42 days of coding live here. Systems-C only. Read the prompt, write the code in `exercises/dNN_<name>.c`, build, run, explain *why*, then check it against the reference.
 >
-> **Where the reference lives:** Day 0 has runnable files in [solutions/](solutions/). For Days 1-22 the reference solution is inline in this document (under each day's heading) and is extracted into a runnable `solutions/dNN_*.c` only when you choose to — this tree fills in incrementally as you expand the knowledge base on the job.
+> **Where the reference lives:** Day 0 has runnable files in [solutions/](solutions/). For the coding days (see the map below) the reference solution is inline in this document (under each day's heading) and is extracted into a runnable `solutions/dNN_*.c` only when you choose to — this tree fills in incrementally as you expand the knowledge base on the job.
 
-This file is the coding companion to [prep_plan/README.md](../prep_plan/README.md). The plan is **25 days, no DSA, no LeetCode** — every exercise is a bit/CSR/FSM/PM/PCIe systems-C model tied to the day's reading.
+This file is the coding companion to [prep_plan/README.md](../prep_plan/README.md). The plan is **42 days, no DSA, no LeetCode** — every exercise is a bit/CSR/FSM/CDC/memory/verification/PM/PCIe systems-C model tied to the day's reading. It is one continuous bottom-up build (Day 0–41); the [prep_plan/README.md](../prep_plan/README.md) has the phase map.
 
 ## How to use
 
@@ -45,35 +45,52 @@ cc -Wall -Wextra -Wpedantic -std=c11 -g -O0 -I. exercises/<file>.c -o /tmp/<file
 | 1 | C address fluency | `d01_reg_poke` |
 | 2 | Pointers / alignment | `d02_aligned_alloc` |
 | 3 | Bits / MMIO / volatile / W1C | `d03_dev_init` |
-| 4 | Cache lines / locality / AMAT | `d04_cache_sim` |
-| 5 | Coherence / MESI / false sharing | `d05_mesi_sim` |
-| 6 | Virtual memory / page walk | `d06_page_walk` |
-| 7 | TLB / IOMMU | `d07_tlb_iommu` |
-| 8 | DMA / doorbells / barriers | `d08_sq_doorbell` |
-| 9 | Pipeline + OoO microarch | `d09_pipeline_bp` |
-| 10 | Memory consistency + atomics | `d10_spsc_acqrel` |
-| 11 | CPU bring-up + IP functional val | `d11_cpu_bringup_ladder` |
-| 12 | DVFS / P-states / PVT | `d12_dvfs` |
-| 13 | C-states / PkgC / S0ix | `d13_pkgc6_gate` |
-| 14 | Clock + power gating + UPF | `d14_upf_domain_model` |
-| 15 | Thermal / perf counters | `d15_tj_rapl_tma` |
-| 16 | Pre-Si PM validation | `d16_pm_coverage_tracker` |
-| 17 | Post-Si PM validation + ADR/C6 bugs | `d17_residency_delta` (+ `d17_adr` opcode model) |
-| 18 | PCIe fundamentals + LTSSM | `d18_ltssm_walk` |
-| 19 | PCIe enumeration / config / MSI | `d19_enum_walker` |
-| 20 | PCIe power management (ASPM/L1.2) | `d20_aspm_l12_fsm` |
-| 21 | PCIe bring-up + functional val | `d21_ltssm_stuck_classifier` |
-| 22 | PCIe × PM intersection | `d22_pkgc_blocker_arbiter` |
-| 23 | MSFT/NPU exit pointers (1 day) | — *(no new exercise; reuse `d06_page_walk` to anchor the QNN story)* |
-| 24 | Final mock interview day | — *(re-run any 2-3 exercises cold as warm-up)* |
+| 4 | Bit manipulation mastery | `d04_bitops` |
+| 5 | Boolean + combinational logic | `d05_comb_logic` |
+| 6 | Arithmetic circuits | `d06_arith` |
+| 7 | Sequential logic + flip-flops | `d07_seq_timing` |
+| 8 | Timing & STA | `d08_sta_paths` |
+| 9 | FSM design + sequence detectors | `d09_fsm_detect` |
+| 10 | Verilog & SystemVerilog | `d10_rtl_semantics` |
+| 11 | Clocking & reset architecture | `d11_clock_reset` |
+| 12 | Metastability + synchronizers | `d12_metastability` |
+| 13 | CDC techniques | `d13_cdc_sync` |
+| 14 | Async FIFO + CDC verification | `d14_async_fifo` |
+| 15 | Memory systems + ECC | `d15_mem_ecc` |
+| 16 | Cache lines / locality / AMAT | `d16_cache_sim` |
+| 17 | Coherence / MESI / false sharing | `d17_mesi_sim` |
+| 18 | Virtual memory / page walk | `d18_page_walk` |
+| 19 | TLB / IOMMU | `d19_tlb_iommu` |
+| 20 | DMA / doorbells / barriers | `d20_sq_doorbell` |
+| 21 | Pipeline + OoO microarch | `d21_pipeline_bp` |
+| 22 | Memory consistency + atomics | `d22_spsc_acqrel` |
+| 23 | CPU bring-up + IP functional val | `d23_cpu_bringup_ladder` |
+| 24 | Verification planning + coverage | `d24_vplan_coverage` |
+| 25 | Testbench + assertions + debug | `d25_scoreboard_crv` |
+| 26 | DVFS / P-states / PVT | `d26_dvfs` |
+| 27 | C-states / PkgC / S0ix | `d27_pkgc6_gate` |
+| 28 | Clock + power gating + UPF | `d28_upf_domain_model` |
+| 29 | Thermal / perf counters | `d29_tj_rapl_tma` |
+| 30 | Pre-Si PM validation | `d30_pm_coverage_tracker` |
+| 31 | Post-Si PM validation + ADR/C6 | `d31_residency_delta` (+ `d31_adr` opcode model) |
+| 32 | AMBA AXI & CHI | `d32_axi_model` |
+| 33 | PCIe fundamentals + LTSSM | `d33_ltssm_walk` |
+| 34 | PCIe enumeration / config / MSI | `d34_enum_walker` |
+| 35 | PCIe power management (ASPM/L1.2) | `d35_aspm_l12_fsm` |
+| 36 | PCIe bring-up + functional val | `d36_ltssm_stuck_classifier` |
+| 37 | PCIe × PM intersection | `d37_pkgc_blocker_arbiter` |
+| 38 | NVMe storage-controller SoC val | — *(reuse `d20_sq_doorbell` for the queue/doorbell datapath)* |
+| 39 | Logic puzzles + estimation | `d39_puzzle_sims` *(optional)* |
+| 40 | Intel-role narrative | — *(narrative day; no new code)* |
+| 41 | Final mock interview day | — *(re-run any 2-3 exercises cold as warm-up)* |
 
-Each Day 1-22 entry below has one **Systems C exercise** with full problem statement, signatures, driver, and interview prompts. Architect drills and bug anchors live in the matching [`prep_plan/dayNN_*.md`](../prep_plan/) reading file (kept in one place to avoid duplication).
+Each coding day below has one **Systems C exercise** with full problem statement, signatures, driver, and interview prompts. Architect drills and bug anchors live in the matching [`prep_plan/dayNN_*.md`](../prep_plan/) reading file (kept in one place to avoid duplication). Exercise sections below are in day order (Day 1 → Day 39); Days 0/38/40/41 have no dedicated exercise (see notes).
 
 ---
 
 # Day 1 — C address fluency
 
-## D01 — Register-poke harness (`d01_reg_poke`)
+## D1 — Register-poke harness (`d01_reg_poke`)
 
 **Problem statement.** Build a simulated MMIO harness from scratch. Back a register with a single `volatile uint32_t` (stand-in for a real BAR offset). Implement bit/field macros, typed accessors, an RMW field-write, and a bounded poll loop. Drive it end-to-end: program a field, demonstrate the timeout path, demonstrate the success path.
 
@@ -101,7 +118,7 @@ static int             wait_for_bit_set(volatile uint32_t *r, uint32_t mask, int
 
 # Day 2 — Pointers, memory layout, alignment
 
-## D02 — Aligned allocator + container_of (`d02_aligned_alloc`)
+## D2 — Aligned allocator + container_of (`d02_aligned_alloc`)
 
 **Problem statement.** Build a manual aligned allocator that satisfies arbitrary power-of-2 alignment on top of plain `malloc`, plus a Linux-style `container_of` macro. Demonstrate both on an intrusive list. Also print `sizeof` for two structs that differ only in field order to show padding is layout-driven.
 
@@ -127,7 +144,7 @@ void  aligned_free(void *p);
 
 # Day 3 — Bits, MMIO, volatile, polling
 
-## D03 — Device init harness with poll + RMW (`d03_dev_init`)
+## D3 — Device init harness with poll + RMW (`d03_dev_init`)
 
 **Problem statement.** Build a fake-device init harness using a small `uint8_t mmio[256]` backing array. Implement typed accessors (`reg_read`, `reg_write`, `reg_rmw`), a bounded `poll_ready` that simulates HW asserting ready after N iterations, and a top-level main that resets the device, polls for ready, enables and starts it, then writes/reads `DATA`.
 
@@ -151,9 +168,307 @@ static bool            poll_ready(uint32_t off, uint32_t mask, uint32_t exp, uin
 
 ---
 
-# Day 4 — Cache lines, locality, AMAT
+# Day 4 — Bit Manipulation Mastery
 
-## D04 — Address decode + cache simulator (`d04_cache_sim`)
+## D4 — Bit-ops library (`d04_bitops`)
+
+**Problem statement.** Build the reflex bit toolkit and validate every function against a brute-force oracle, with explicit tests for the UB traps.
+
+**Implement:**
+```c
+int      is_pow2(uint32_t x);
+uint32_t floor_pow2(uint32_t x);        /* largest 2^k <= x, x>0 */
+uint32_t ceil_pow2(uint32_t x);         /* smallest 2^k >= x */
+int      popcount_kern(uint32_t x);     /* x &= x-1 per set bit */
+int      popcount_swar(uint32_t x);     /* branch-free */
+int      ffs32(uint32_t x), clz32(uint32_t x), ctz32(uint32_t x);
+uint32_t get_field(uint32_t r,int lo,int w), put_field(uint32_t r,int lo,int w,uint32_t v);
+uint32_t rol32(uint32_t x,int n), ror32(uint32_t x,int n);   /* width-guarded */
+uint32_t bswap32(uint32_t x), reverse32(uint32_t x);
+uint32_t xor_unique(const uint32_t*a,int n), xor_missing(const uint32_t*a,int n);
+uint64_t combine64(uint32_t hi, uint32_t lo);   /* widen-before-shift */
+```
+
+**Driver / tests:**
+- `floor_pow2(100)==64`, `ceil_pow2(100)==128`, handle `x==0/1`.
+- `popcount_kern==popcount_swar==__builtin_popcount` over many values.
+- `combine64(0xDEADBEEF,0x01020304)==0xDEADBEEF01020304` (prove the un-widened `hi<<32` loses the high half).
+- `reverse32` round-trips twice == identity; field RMW preserves neighbour bits.
+
+**Interview prompts:** Floor vs ceil pow2 — the shared smear move? Why widen before `<<32`? Why is `x&(x-1)` popcount faster on sparse inputs? Find-first-set = which hardware block?
+
+---
+
+# Day 5 — Boolean + Combinational Logic
+
+## D5 — Combinational-block library (`d05_comb_logic`)
+
+**Problem statement.** Model the standard combinational blocks *from their truth tables* in C and prove each against a brute-force oracle. No clocks, no state — every function is pure.
+
+**Implement:**
+```c
+int      priority_encode(uint32_t in);             /* index of HIGHEST set bit, -1 if 0 */
+uint32_t mux2(uint32_t a, uint32_t b, int sel);
+uint32_t mux4(uint32_t d[4], int sel);
+uint8_t  add4(uint8_t a, uint8_t b, int cin, int *cout);   /* 4-bit ripple, exposes carry */
+typedef enum { OP_ADD, OP_SUB, OP_AND, OP_OR, OP_XOR, OP_SLT } aluop_t;
+uint8_t  alu4(uint8_t a, uint8_t b, aluop_t op, int *carry, int *ovf); /* SUB = a + ~b + 1 */
+int      parity(uint32_t x);                       /* XOR reduction */
+int      popcount_tt(uint32_t x);
+```
+
+**Driver / tests:**
+- `priority_encode(0b01010) == 3`; `priority_encode(0) == -1`.
+- `add4(0xF,0x1,0,&c)` → sum `0x0`, `cout==1`. Sweep all 256×2 inputs vs a reference adder.
+- `alu4` SUB: show **signed overflow == (carry-in ≠ carry-out of MSB)** on `0x78+0x50`.
+- `mux4` and `parity`/`popcount_tt` checked against brute force over all inputs.
+
+**Interview prompts:** Why is a mux universal (Shannon expansion)? Priority vs plain encoder — when does the answer change? Signed overflow as carry-in ≠ carry-out of the MSB. Where does an incomplete `case` infer a latch?
+
+---
+
+# Day 6 — Arithmetic Circuits
+
+## D6 — Arithmetic library (`d06_arith`)
+
+**Problem statement.** Model datapath arithmetic in C and validate against native ops. Show the adder speed/area idea, the fast-multiplier structure, fixed-point reformatting, and the floating-point compare trap.
+
+**Implement:**
+```c
+uint32_t add_ripple(uint32_t a, uint32_t b, int *cout, int *ovf);  /* signed-overflow = cin≠cout of MSB */
+uint32_t add_cla(uint32_t a, uint32_t b, int *cout);              /* G/P expansion; == ripple result */
+int64_t  mul_shiftadd(int32_t a, int32_t b);
+int64_t  mul_booth(int32_t a, int32_t b);                          /* radix-4 Booth; == native */
+int32_t  qmul(int32_t a, int32_t b, int n);                        /* Qm.n * Qm.n -> shift>>n + round + saturate */
+int      fp_eq(float a, float b, float eps);                      /* |a-b|<eps; classify NaN/Inf */
+```
+
+**Driver / tests:** sweep random signed inputs — `add_cla == add_ripple == native`; `mul_booth == mul_shiftadd == native`; show signed overflow flag on `0x7FFFFFFF+1`; `qmul` of two `Q8.8` values round-trips with saturation; `fp_eq(0.1+0.2, 0.3, 1e-6)==1` while `==` fails; `NaN != NaN`.
+
+**Interview prompts:** Ripple vs CLA — where's the delay? Why Booth+Wallace is the fast multiplier? Why never `==` on floats? Fixed-point reformat after multiply?
+
+---
+
+# Day 7 — Sequential Logic + Timing
+
+## D7 — Sequential primitives + timing calculator (`d07_seq_timing`)
+
+**Problem statement.** Model the clocked building blocks and the static-timing math. Assert the invariants that make each one correct (max-length LFSR, single-bit Gray transition, hold independent of clock period).
+
+**Implement:**
+```c
+uint32_t lfsr_step(uint32_t state, uint32_t taps, int width);  /* Galois/Fibonacci */
+uint32_t bin_to_gray(uint32_t b);
+uint32_t gray_to_bin(uint32_t g);
+uint32_t gray_inc(uint32_t g);                 /* +1 in Gray domain */
+typedef struct { double tcq, tcomb_max, tcomb_min, tsu, th, tskew; } timing_t;
+double fmax_hz(const timing_t *t);
+double setup_slack(const timing_t *t, double tclk);
+double hold_slack(const timing_t *t);          /* note: tclk does NOT appear */
+```
+
+**Driver / tests:**
+- LFSR: from a non-zero seed, assert it visits exactly `2^width - 1` states and never `0`; show all-zeros is a fixed point.
+- Gray: assert `popcount(g_n ^ g_{n+1}) == 1` for a full lap; round-trip `gray_to_bin(bin_to_gray(x))==x`.
+- Timing: with `tcq=80,tcomb_max=600,tsu=50,tskew=40` (ps) print `fmax`; with a short `tcomb_min` show a **negative hold slack** that slowing `tclk` cannot fix.
+
+**Interview prompts:** Why doesn't `tclk` appear in the hold equation? Two fixes for a hold violation. Why does Gray guarantee one-bit change? What makes an LFSR lock up?
+
+---
+
+# Day 8 — Timing & STA
+
+## D8 — Multi-path STA slack calculator (`d08_sta_paths`)
+
+**Problem statement.** Given a list of timing paths and an exceptions list, compute per-path setup/hold slack, report WNS/TNS, classify each violation, and skip declared false/async paths — a tiny static timing engine.
+
+**Implement:**
+```c
+typedef struct { const char *name, *launch_clk, *capture_clk;
+  double period, tcq, tcomb_min, tcomb_max, tsu, th, skew, uncertainty; } path_t;
+double setup_slack(const path_t *p);     /* required - arrival; period present */
+double hold_slack(const path_t *p);      /* (tcq+tcomb_min) - (th+skew+unc); period ABSENT */
+int    is_async(const path_t *p, const char **async_groups, int n);  /* clock-group exception */
+void   report(const path_t *paths, int n, const char **async_groups, int ng); /* WNS/TNS + fix class */
+```
+
+**Driver / tests:** a mixed set including a setup-limited path (fix="slow/pipeline"), a hold-limited path (fix="add delay"; show slowing the clock doesn't help), and a **cross-clock path that generates false violations until added to the async group**. Print WNS, TNS, and per-path pass/fail + fix.
+
+**Interview prompts:** Why no period in hold? Which corner for hold vs setup? What if you false-path a real path?
+
+---
+
+# Day 9 — FSM Design + Sequence Detectors
+
+## D9 — Sequence detector + safe FSM (`d09_fsm_detect`)
+
+**Problem statement.** Implement a serial sequence detector two ways and prove them equivalent on random bit streams, then demonstrate a **safe FSM** recovering from an illegal state.
+
+**Implement:**
+```c
+/* state-machine detector: parameterized target pattern, overlapping flag */
+int seq_detect(const int *bits, int n, uint32_t pattern, int plen,
+               int overlapping, int *out);    /* out[i]=1 when match ends at i */
+/* sliding-window matcher: "pattern appears in the last plen bits" */
+int win_match(const int *bits, int n, uint32_t pattern, int plen, int *out);
+/* safe FSM: inject an illegal state code, show default->reset recovery */
+int safe_fsm_step(int state, int in, int inject_illegal);
+```
+
+**Driver / tests:**
+- `101` overlapping on `10101` fires **twice**; non-overlapping fires once.
+- Random 10k-bit streams: assert `seq_detect` (overlapping) matches a reference sliding compare.
+- Inject an out-of-range state into `safe_fsm_step`; assert next state is reset, not a hang.
+
+**Interview prompts:** Overlapping vs non-overlapping — which back-edge differs? Moore vs Mealy output timing. Why does one-hot give a free `$onehot` assertion? Where does the longest-suffix rule come from?
+
+---
+
+# Day 10 — Verilog & SystemVerilog
+
+## D10 — RTL semantics model (`d10_rtl_semantics`)
+
+**Problem statement.** Model Verilog's 4-state logic and update semantics in C so the classic bugs become visible.
+
+**Implement:**
+```c
+typedef enum { L0, L1, LX, LZ } logic4_t;                 /* 0,1,X,Z */
+logic4_t and4(logic4_t a, logic4_t b), or4(logic4_t,logic4_t), not4(logic4_t), xor4(logic4_t,logic4_t);
+logic4_t resolve(logic4_t a, logic4_t b);                 /* two drivers: 1+0 -> X (contention) */
+void shift_nonblocking(logic4_t *q1, logic4_t *q2, logic4_t d);  /* correct 2-FF shift */
+void shift_blocking(logic4_t *q1, logic4_t *q2, logic4_t d);     /* collapses to 1 flop (bug) */
+int  infer_latch(const int *assigned, int ncases);       /* incomplete case -> 1 (latch) */
+```
+
+**Driver / tests:** truth tables show **X-propagation** (`X & 1 = X`) and **Z-contention -> X**; `shift_nonblocking` shifts `d` through two flops while `shift_blocking` lands `d` in both (collapse); `infer_latch` flags a case that doesn't assign every path.
+
+**Interview prompts:** Why does blocking collapse the shift register? What produces X and how does it propagate? `always_comb` vs `always @(*)`?
+
+---
+
+# Day 11 — Clocking & Reset Architecture
+
+## D11 — Clock-mux + reset sequencer (`d11_clock_reset`)
+
+**Problem statement.** Model the clocking/reset control that CDC sits on: a glitchless clock mux, a divider, and an ordered reset release.
+
+**Implement:**
+```c
+/* glitchless mux: old clock must reach a clean low before the new one starts */
+int  clk_mux_step(int *state, int sel, int clkA, int clkB, int *out, int *runt);  /* runt=1 on violation */
+int  div_n(int *cnt, int clk_in, int n);                 /* ÷N */
+/* release N domains in required order through per-domain 2-FF reset synchronizers */
+int  reset_seq(int *dom_rst, const int *order, int n, int step, int *bad_order);
+```
+
+**Driver / tests:** drive two async clocks through `clk_mux_step` across many phases — assert `runt` never fires (vs a naive combinational mux that does); `div_n` halves/thirds correctly; `reset_seq` releases in order and **flags an out-of-order release**.
+
+**Interview prompts:** Where does the runt pulse come from in a naive clock mux? Why async-assert / sync-de-assert? What breaks if reset releases out of order?
+
+---
+
+# Day 12 — Metastability + Synchronizers
+
+## D12 — MTBF + synchronizer model (`d12_metastability`)
+
+**Problem statement.** Model the metastability math and the 2-FF synchronizer, then show with an injection harness why one flop is unsafe and two are safe for a **level**.
+
+**Implement:**
+```c
+double mtbf(double t_r, double tau, double T0, double f_clk, double f_data);
+/* 2-FF synchronizer: returns the level delayed by two dest cycles */
+int sync2_step(int *ff1, int *ff2, int async_in);
+/* injection: on a near-edge transition, randomly stall stage-1 by a cycle */
+int meta_inject(int *stage, int async_in, int near_edge, unsigned *seed);
+```
+
+**Driver / tests:**
+- Show `mtbf` grows exponentially with `t_r` and shrinks with `f_clk`/`f_data` (print a small sweep).
+- Stream a slowly-changing level through `sync2_step`; assert the output equals the input delayed by 2, never a glitch.
+- Run the injection harness many seeds: a 1-FF "sync" can emit a corrupted sample; the 2-FF structure never does.
+
+**Interview prompts:** Which MTBF term is the design lever? Why no logic between the two flops? Why no fanout from FF1? What can a 2-FF synchronizer *not* carry?
+
+---
+
+# Day 13 — CDC Techniques: Pulse, Handshake, Gray, Reset
+
+## D13 — Pulse synchronizer + handshake (`d13_cdc_sync`)
+
+**Problem statement.** Model the crossings a 2-FF can't handle: a toggle-based **pulse** synchronizer (and demonstrate a *lost* back-to-back event), and a closed-loop **req/ack handshake** that never loses a word.
+
+**Implement:**
+```c
+/* open-loop: toggle in src, 2-FF + edge-detect in dest. Returns dest pulses. */
+int toggle_sync(const int *src_pulses, int n, int dest_div, int *dest_pulses);
+/* closed-loop 4-phase handshake moving a word; returns words delivered in order */
+int handshake_xfer(const uint32_t *words, int n, uint32_t *out);
+uint32_t bin_to_gray(uint32_t b);   /* reused from D7, for pointer crossings */
+```
+
+**Driver / tests:**
+- Space events out → `toggle_sync` delivers all; make events back-to-back (faster than `dest_div`) → **show a dropped event** (maps to the Intel back-to-back-wake bug).
+- `handshake_xfer` delivers every word, in order, regardless of spacing.
+
+**Interview prompts:** Why does the open-loop toggle lose back-to-back events? Why is a handshake safe for a bus without syncing the data bits? Why Gray for pointers? Reset synchronizer: why async-assert / sync-de-assert?
+
+---
+
+# Day 14 — Async FIFO + CDC Verification
+
+## D14 — Async FIFO + depth calculator (`d14_async_fifo`)
+
+**Problem statement.** Model a dual-clock FIFO with **Gray-coded** pointers and the extra-MSB full/empty logic, then reproduce the Broadcom **depth = 32** result by finding the peak backlog of a dual-rate stream.
+
+**Implement:**
+```c
+typedef struct { uint32_t mem[256]; uint32_t wptr, rptr; int depth; } afifo_t; /* pointers carry +1 MSB */
+int  fifo_write(afifo_t *f, uint32_t v);   /* returns -1 on full (no data loss) */
+int  fifo_read (afifo_t *f, uint32_t *v);  /* returns -1 on empty (no garbage)  */
+int  fifo_full (const afifo_t *f);         /* gray compare, MSB inverted */
+int  fifo_empty(const afifo_t *f);
+/* drive randomized write/read bursts at given avg rates; return peak backlog */
+int  peak_backlog(int wr_per100, int rd_per10, int clocks, unsigned seed);
+```
+
+**Driver / tests:**
+- Fill/drain/wrap: assert FIFO order + data integrity; never overflow or underflow.
+- `peak_backlog(80, 8, 100000, seed)` → **≈ 32** (the equal-average-rate burst-backlog case).
+- Error harness: force write-at-full / read-at-empty → flags fire, no data lost/duplicated.
+
+**Interview prompts:** Why Gray pointers? Why the extra MSB? Why is depth a *burst* problem when averages match? Why does functional sim miss CDC bugs?
+
+---
+
+# Day 15 — Memory Systems + ECC
+
+## D15 — Address decode + Hamming SECDED (`d15_mem_ecc`)
+
+**Problem statement.** Model the structural memory view: decompose an address into `[bank|row|col|byte]`, and build a single-error-correcting / double-error-detecting code that actually corrects.
+
+**Implement:**
+```c
+typedef struct { int bank_bits, row_bits, col_bits, byte_bits; } geom_t;
+void addr_split(uint32_t addr, const geom_t *g, uint32_t *bank, uint32_t *row,
+                uint32_t *col, uint32_t *byte);
+uint32_t addr_join(uint32_t bank, uint32_t row, uint32_t col, uint32_t byte, const geom_t *g);
+uint16_t ecc_encode(uint8_t data);                 /* 8 data -> 13 bits: 4 check + overall parity */
+int      ecc_decode(uint16_t code, uint8_t *out);  /* 0=clean, 1=corrected, 2=double-bit (uncorrectable) */
+void     march_c(uint8_t *mem, int n);             /* fault-detecting write/read passes */
+```
+
+**Driver / tests:**
+- `addr_join(addr_split(x))==x` round-trips for a given geometry.
+- ECC: corrupt **one** bit → `ecc_decode` returns 1 and recovers the byte; corrupt **two** → returns 2 (flagged, not miscorrected). Sweep all single-bit positions.
+- Inject a stuck-at / decoder fault into `mem`; assert `march_c` detects it.
+
+**Interview prompts:** Address vs data in one sentence. Why power-of-2 check-bit positions? How does SECDED tell 1-bit from 2-bit? What fault models does a march test catch?
+
+---
+
+# Day 16 — Cache lines, locality, AMAT
+
+## D16 — Address decode + cache simulator (`d16_cache_sim`)
 
 **Problem statement.** Software model of a set-associative cache. Decode each access into `(tag, set, offset)`, look it up across the ways, update LRU bits on hits, evict on misses. Run two access patterns to demonstrate locality vs stride collapse.
 
@@ -175,9 +490,9 @@ bool access(uint32_t addr);   /* return true on hit, false on miss; update LRU *
 
 ---
 
-# Day 5 — Coherence, MESI, false sharing
+# Day 17 — Coherence, MESI, false sharing
 
-## D05 — MESI step-machine + false-sharing layout check (`d05_mesi_sim`)
+## D17 — MESI step-machine + false-sharing layout check (`d17_mesi_sim`)
 
 **Problem statement.** Model two cores' L1 lines and one main-memory cell. Implement `rd(who)` and `wr(who, v)` that mutate `(cline_t c0, c1)` according to MESI rules — including HITM (other core in M forwards and both go to S) and write-invalidate. After each step, print `C0`, `C1`, `mem`.
 
@@ -197,9 +512,9 @@ void wr(int who, int v);
 
 ---
 
-# Day 6 — Virtual memory, page faults
+# Day 18 — Virtual memory, page faults
 
-## D06 — 4-level page walk (`d06_page_walk`)
+## D18 — 4-level page walk (`d18_page_walk`)
 
 **Problem statement.** x86-64-style 4-level page walk in C: four 512-entry tables (`pml4`, `pdpt`, `pd`, `pt`). Each PTE carries `P` and `RW` flags plus a frame-aligned PFN. The walk takes a 64-bit VA, walks the four levels by 9-bit indices, returns either a physical address or 0 with a reason string on fault.
 
@@ -217,13 +532,13 @@ uint64_t walk(uint64_t va, const char **why);
 
 **Driver:** Map `VA 0x0000 → PA 0x1000` and `VA 0x1000 → PA 0x2000`. Walk both → success. Walk `0x2000` → fault `"PT not present"`.
 
-**Interview prompts:** Why 4 levels and not flat? Why is page offset never translated? PFN vs physical address? Page fault vs TLB miss vs cache miss in 30 sec. *(This is also the anchor exercise for the Day 23 QNN page-fault bug story.)*
+**Interview prompts:** Why 4 levels and not flat? Why is page offset never translated? PFN vs physical address? Page fault vs TLB miss vs cache miss in 30 sec. *(This is also the anchor exercise for the Day 40 QNN page-fault bug story.)*
 
 ---
 
-# Day 7 — TLB, huge pages, IOMMU/SMMU
+# Day 19 — TLB, huge pages, IOMMU/SMMU
 
-## D07 — TLB lookup with FIFO + IOMMU translate (`d07_tlb_iommu`)
+## D19 — TLB lookup with FIFO + IOMMU translate (`d19_tlb_iommu`)
 
 **Problem statement.** Two collaborating models.
 
@@ -248,9 +563,9 @@ bool iommu_translate(iommu_ctx_t *c, uint32_t iova, bool wr, uint64_t *pa);
 
 ---
 
-# Day 8 — DMA, doorbells, ordering, barriers
+# Day 20 — DMA, doorbells, ordering, barriers
 
-## D08 — SQ ring + doorbell harness (`d08_sq_doorbell`)
+## D20 — SQ ring + doorbell harness (`d20_sq_doorbell`)
 
 **Problem statement.** Producer side of a generic submission-queue / doorbell pattern. Build a 16-entry ring, a `volatile` MMIO doorbell stand-in, a `sq_submit(cmd, arg)` that fills the descriptor, issues a memory barrier, advances the tail, writes the doorbell. Then `device_consume_one()` simulates the device picking up the next entry from `sq_head`.
 
@@ -271,9 +586,9 @@ void device_consume_one(void);
 
 ---
 
-# Day 9 — Pipeline + OoO microarch
+# Day 21 — Pipeline + OoO microarch
 
-## D09 — Pipeline simulator + 2-bit branch predictor + license-level model (`d09_pipeline_bp`)
+## D21 — Pipeline simulator + 2-bit branch predictor + license-level model (`d21_pipeline_bp`)
 
 **Problem statement.** Three small models you can talk through in 60 seconds.
 
@@ -297,9 +612,9 @@ void   pipeline_demo(void);
 
 ---
 
-# Day 10 — Memory consistency + atomics
+# Day 22 — Memory consistency + atomics
 
-## D10 — Spinlock + SPSC ring with acq/rel ordering (`d10_spsc_acqrel`)
+## D22 — Spinlock + SPSC ring with acq/rel ordering (`d22_spsc_acqrel`)
 
 **Problem statement.** Two lock-free / lock-light primitives end-to-end.
 
@@ -328,9 +643,9 @@ bool spsc_pop (spsc_t *r, int *v);
 
 ---
 
-# Day 11 — CPU bring-up + IP functional val
+# Day 23 — CPU bring-up + IP functional val
 
-## D11 — CPU bring-up 9-stage ladder simulator (`d11_cpu_bringup_ladder`)
+## D23 — CPU bring-up 9-stage ladder simulator (`d23_cpu_bringup_ladder`)
 
 **Problem statement.** Model the canonical CPU IP bring-up ladder as a small state machine. Each stage has a `ready` flag and an ordered list of prerequisites; advancing requires the previous stage to be ready. Validation checks include illegal-skip detection, retry-on-fail, and a final "boot reached" assertion.
 
@@ -369,9 +684,60 @@ void report(const bringup_t *b);
 
 ---
 
-# Day 12 — DVFS / P-states / PVT
+# Day 24 — Verification Planning + Coverage
 
-## D12 — DVFS table lookup with thermal cap + IPC counter (`d12_dvfs`)
+## D24 — Coverage tracker + vplan (`d24_vplan_coverage`)
+
+**Problem statement.** Model the coverage-driven loop: define coverpoints with bins and a cross, feed randomized stimulus, report coverage and the **uncovered holes**, then close a hole with a directed test.
+
+**Implement:**
+```c
+typedef struct { const char *name; int nbins; int *hits; } coverpoint_t;
+void cover_sample(coverpoint_t *cp, int bin);
+double cover_pct(const coverpoint_t *cp);          /* fraction of bins hit >=1 */
+int    cover_holes(const coverpoint_t *cp, int *out);  /* list unhit bins */
+/* a cross of two coverpoints */
+double cross_pct(const coverpoint_t *a, const coverpoint_t *b, const int *seen);
+typedef struct { const char *spec_ref, *test, *coverpoint; int covered; } vrow_t;
+int    vplan_audit(const vrow_t *rows, int n, const coverpoint_t *cps);  /* fail if 'covered' but 0 hits */
+```
+
+**Driver / tests:**
+- Feed random samples; show coverage climbing and a stuck **hole** bin; add a directed sample that closes it → 100%.
+- `vplan_audit` flags a row marked covered whose coverpoint has zero hits (the checker-less-test smell).
+
+**Interview prompts:** Recite the 8-step test-plan scaffold. Why is 100% code coverage insufficient? Hole vs legitimate exclusion? Directed vs CRV vs formal for three goals.
+
+---
+
+# Day 25 — Testbench Architecture + Assertions + Debug
+
+## D25 — Scoreboard + constrained-random (`d25_scoreboard_crv`)
+
+**Problem statement.** Build a **self-checking** testbench around a DUT model (reuse the D14 FIFO or the D5 ALU): a reference model, a constrained-random generator with a logged seed, a scoreboard that flags the **first** diverging transaction, and an error-injection mode.
+
+**Implement:**
+```c
+typedef struct { uint32_t a, b; int op; } txn_t;
+void     gen_txn(txn_t *t, unsigned *seed);        /* constrained: legal op/range only */
+uint32_t ref_model(const txn_t *t);                /* golden expected result */
+int      scoreboard(const txn_t *t, uint32_t dut_out, int *first_fail_idx, int idx);
+int      assert_invariants(const txn_t *t, uint32_t dut_out);  /* e.g. no overflow, in-range */
+void     inject_error(txn_t *t);                   /* force an illegal input */
+```
+
+**Driver / tests:**
+- Run N constrained-random transactions through DUT + reference; scoreboard must pass and the **seed is printed** for replay.
+- Introduce a deliberate DUT bug; assert the scoreboard reports the **first** diverging index, not a later one.
+- Error-injection mode: illegal inputs trigger the flag/handling, never silent corruption.
+
+**Interview prompts:** Why self-checking? What does an assertion catch that a scoreboard doesn't (and vice versa)? Functional vs error tests for this DUT? Narrate a first-divergence debug trace.
+
+---
+
+# Day 26 — DVFS / P-states / PVT
+
+## D26 — DVFS table lookup with thermal cap + IPC counter (`d26_dvfs`)
 
 **Problem statement.** Build a DVFS controller. Given a 5-entry P-state table (P4..P0 from `(400 MHz, 750 mV)` to `(2400 MHz, 1150 mV)`), implement `select_opp(target_mhz, tj_c)` that picks the lowest OPP meeting target frequency, **capped to ≤1200 MHz when `tj_c >= 90`** (thermal throttle). Then `apply_opp(cur, next)` that prints the correct sequencing — **V before F when ramping up, F before V when ramping down**.
 
@@ -393,9 +759,9 @@ double ipc(const pmu_t *p);
 
 ---
 
-# Day 13 — C-states / PkgC / S0ix
+# Day 27 — C-states / PkgC / S0ix
 
-## D13 — C-state request + PkgC6 PCU gate model (`d13_pkgc6_gate`)
+## D27 — C-state request + PkgC6 PCU gate model (`d27_pkgc6_gate`)
 
 **Problem statement.** Model the PCU's PkgC6 gating. 4 cores (`cores[NCORES]`), each with `cstate_t cs` and a `work_pending` flag. `request_core_cs(id, target)` refuses any state deeper than C1 if work is pending. `try_pkg_c6()` checks **all** cores in C6 *and* every uncore IP (`llc_idle`, `mc_idle`, `pcie_in_l1_2`, `display_idle`, `intc_idle`) reports idle. If blocked, print which IP blocks. Default `pcie_in_l1_2 = false` so the first attempt fails.
 
@@ -410,15 +776,15 @@ bool try_pkg_c6(void);
 const char *blocker(void);
 ```
 
-**Driver:** All 4 cores → request C6. `try_pkg_c6()` → "BLOCKED: PCIe link not in L1.2". Set `un.pcie_in_l1_2 = true`, retry → "PkgC6 ENTERED". *(This blocker pattern is the seed of the Day 22 PCIe×PM intersection exercise.)*
+**Driver:** All 4 cores → request C6. `try_pkg_c6()` → "BLOCKED: PCIe link not in L1.2". Set `un.pcie_in_l1_2 = true`, retry → "PkgC6 ENTERED". *(This blocker pattern is the seed of the Day 37 PCIe×PM intersection exercise.)*
 
 **Interview prompts:** C1 vs C1E vs C6 vs C10 — clock-gated vs power-gated, retention SRAM, wake latency. Why does PkgC6 need *every* uncore IP idle? Shared-rail and snoop-traffic arguments. Break-even residency $T_r > (E_{\text{in}} + E_{\text{out}}) / \Delta P$. L1.2 dependency for PkgC6; LTR/CLKREQ#/ASPM bring-up checklist.
 
 ---
 
-# Day 14 — Clock + power gating + UPF
+# Day 28 — Clock + power gating + UPF
 
-## D14 — 3-domain UPF power model with SAVE/ISO/RESTORE asserts (`d14_upf_domain_model`)
+## D28 — 3-domain UPF power model with SAVE/ISO/RESTORE asserts (`d28_upf_domain_model`)
 
 **Problem statement.** Model three power domains (`ALWAYS_ON`, `CPU_CLUSTER`, `GPU`) with proper UPF-style sequencing. Each domain has `power`, `iso`, `retention_valid` flags. Power-down sequence: assert `iso` → assert `clamp` → save retention flops → drop power. Power-up sequence: restore power → wait for stable → restore from retention → de-assert `clamp` → de-assert `iso`. The model includes **assertions** that fail loudly if any step is skipped.
 
@@ -449,9 +815,9 @@ bool assert_safe(const pdomain_t *d, const char *step);
 
 ---
 
-# Day 15 — Thermal, perf counters, multi-IP
+# Day 29 — Thermal, perf counters, multi-IP
 
-## D15 — Tj model + PROCHOT + RAPL delta + TMA bucket (`d15_tj_rapl_tma`)
+## D29 — Tj model + PROCHOT + RAPL delta + TMA bucket (`d29_tj_rapl_tma`)
 
 **Problem statement.** Three composing models for a perf/thermal validation harness.
 
@@ -478,14 +844,14 @@ const char *tma_dominant(const tma_t *t);
 
 ---
 
-# Day 16 — Pre-Si PM validation
+# Day 30 — Pre-Si PM validation
 
-## D16 — PM coverage tracker (state × transition × residency) (`d16_pm_coverage_tracker`)
+## D30 — PM coverage tracker (state × transition × residency) (`d30_pm_coverage_tracker`)
 
-**Problem statement.** Build the **3-axis coverage tracker** described in the Day 16 reading. As the model receives a stream of `(core_id, from_state, to_state, dwell_us)` events, it must maintain:
+**Problem statement.** Build the **3-axis coverage tracker** described in the Day 30 reading. As the model receives a stream of `(core_id, from_state, to_state, dwell_us)` events, it must maintain:
 
 (a) **State coverage** — which (`C0`, `C1`, `C1E`, `C6`, `C10`) states each core has been observed in.
-(b) **Transition coverage** — which `from → to` pairs have fired. Use the legal-transition table from Day 13.
+(b) **Transition coverage** — which `from → to` pairs have fired. Use the legal-transition table from Day 27.
 (c) **Residency-bin coverage** — for each state, did the core hit `short` (<10 µs), `medium` (10-1000 µs), `long` (>1 ms) dwell bins.
 
 At end of run, print a coverage report and flag any axis below 80% coverage as a regression-blocker. Detect **two illegal transitions** in the input stream and emit `SVA_FAIL: illegal transition C0 → C6 (must pass through C1 first)`.
@@ -508,13 +874,13 @@ void report_coverage(const coverage_t *c);
 
 **Driver:** Generate a 50-event stream covering 4 of 5 states, 12 of legal transitions, 2 of 3 bins for C6, all 3 for C0. Plant two illegal transitions. Expect: state 80%, transition ~60% (flag), residency mixed. Print the regression-blocker summary.
 
-**Interview prompts:** Why the 3-axis frame and not just state coverage? The 6 mandatory PM SVAs (SAVE-before-power-down, ISO-before-clamp-release, illegal C-state transition, residency-min, wake-latency-max, no-wake-during-save). Perspec for cross-IP PM scenarios. LP-sim (VC-LP / Conformal-LP) versus functional sim. PCU opcode trace as the golden-ref for the post-Si side (Day 17).
+**Interview prompts:** Why the 3-axis frame and not just state coverage? The 6 mandatory PM SVAs (SAVE-before-power-down, ISO-before-clamp-release, illegal C-state transition, residency-min, wake-latency-max, no-wake-during-save). Perspec for cross-IP PM scenarios. LP-sim (VC-LP / Conformal-LP) versus functional sim. PCU opcode trace as the golden-ref for the post-Si side (Day 31).
 
 ---
 
-# Day 17 — Post-Si PM validation + ADR/C6 bugs
+# Day 31 — Post-Si PM validation + ADR/C6 bugs
 
-## D17a — Wrap-safe residency-counter delta parser (`d17_residency_delta`)
+## D31a — Wrap-safe residency-counter delta parser (`d31_residency_delta`)
 
 **Problem statement.** Build the post-Si tool that reads C-state residency MSRs at two timestamps and computes the percent of wall-clock time spent in each state, *correctly handling counter wrap*. The MSR is a 64-bit free-running TSC-counted residency register; reading at `t0` and `t1` (with `t1 - t0` in TSC ticks) gives `(end - start) mod 2^64` ticks resident. Compute `pct = 100.0 * residency_delta / wall_tsc_delta` for each state and print a `turbostat`-style row.
 
@@ -539,7 +905,7 @@ void     print_row(const char *label, const msr_snap_t *t0, const msr_snap_t *t1
 
 **Interview prompts:** The 8-stage post-Si PM bring-up ladder (silicon → BIOS PM → ACPI tables → kernel governor → user workload → measurement → MSR sweep → bug isolation). turbostat / socwatch / `rdmsr` / `wrmsr` / RAPL / Quarch / Lauterbach — what each tool sees that the others don't. The 7-step debug framework. The **ADR opcode-ordering bug** and the **Core C6 wake-loss bug** — be ready to tell each as a 90-sec story.
 
-## D17b — *(optional)* ADR opcode-sequence simulator (`d17_adr`)
+## D17b — *(optional)* ADR opcode-sequence simulator (`d31_adr`)
 
 **Problem statement.** Model the PCU's ADR (Asynchronous DRAM Refresh) flow as an opcode sequence. Two versions:
 
@@ -564,11 +930,35 @@ int adr_run_fixed(adr_state_t *s);
 
 ---
 
-# Day 18 — PCIe fundamentals + LTSSM
+# Day 32 — AMBA AXI & CHI
 
-## D18 — LTSSM walker (`d18_ltssm_walk`)
+## D32 — AXI model (`d32_axi_model`)
 
-**Problem statement.** Define the 10 LTSSM states (Detect, Polling, Config, L0, Recovery, L0s, L1, L1.1, L1.2, L2). Build an allowed-transition table. `go(link, to)` enforces legality, prints transitions, counts `recoveries` whenever entering Recovery. Add a `bar_size_from_readback(uint32_t rb)` helper as an aside: write `0xFFFFFFFF` to BAR, read back, mask type bits, invert and add 1 to get size — Day 19 will reuse it.
+**Problem statement.** Model the AXI handshake, ordering model, burst rules, and arbiter so the protocol-validation hooks are concrete.
+
+**Implement:**
+```c
+/* VALID/READY: transfer when both high; detect VALID-waits-on-READY deadlock */
+int axi_xfer(int src_has_data, int valid_waits_on_ready, int dst_ready, int *deadlock);
+/* scoreboard: same-ID responses must stay ordered; different-ID may reorder */
+int axi_order_check(const int *resp_id, const int *resp_seq, int n);
+/* INCR/WRAP burst address gen; flag a 4KB-boundary crossing */
+int axi_burst(uint64_t base, int len, int size, int wrap, uint64_t *addrs, int *cross4k);
+/* round-robin arbiter with a starvation check */
+int rr_arbiter(const int *req, int n, int *last_grant);
+```
+
+**Driver / tests:** show a deadlock when VALID waits on READY; `axi_order_check` passes same-ID-ordered traffic and flags a same-ID reorder; an INCR burst that crosses 4KB is flagged; the arbiter serves every requester within one rotation (no starvation).
+
+**Interview prompts:** Why must VALID not wait on READY? Same-ID vs cross-ID ordering? How is CHI just MESI at interconnect scale?
+
+---
+
+# Day 33 — PCIe fundamentals + LTSSM
+
+## D33 — LTSSM walker (`d33_ltssm_walk`)
+
+**Problem statement.** Define the 10 LTSSM states (Detect, Polling, Config, L0, Recovery, L0s, L1, L1.1, L1.2, L2). Build an allowed-transition table. `go(link, to)` enforces legality, prints transitions, counts `recoveries` whenever entering Recovery. Add a `bar_size_from_readback(uint32_t rb)` helper as an aside: write `0xFFFFFFFF` to BAR, read back, mask type bits, invert and add 1 to get size — Day 34 will reuse it.
 
 **Implement:**
 ```c
@@ -586,9 +976,9 @@ uint64_t bar_size_from_readback(uint32_t rb);
 
 ---
 
-# Day 19 — PCIe enumeration, config, BARs, MSI/MSI-X
+# Day 34 — PCIe enumeration, config, BARs, MSI/MSI-X
 
-## D19 — Enumeration walker model (`d19_enum_walker`)
+## D34 — Enumeration walker model (`d34_enum_walker`)
 
 **Problem statement.** Model the BIOS/UEFI depth-first enumeration walk. Given a fake `(bus, dev, fn)` tree, walk every function, read its config header type, recurse on bridges (type-1), program BAR sizes via the write-all-1s trick, build a tree of discovered devices. Track:
 - bridge windows (mem, prefetch, IO) and the **must-be-power-of-2-and-aligned** rule.
@@ -603,7 +993,7 @@ typedef struct { uint8_t bus, dev, fn; func_t f; } node_t;
 typedef struct { node_t *nodes; int count; } tree_t;
 
 void enumerate(uint8_t bus, tree_t *out);
-uint64_t bar_size(uint32_t bar_readback);       /* reuse Day 18 helper */
+uint64_t bar_size(uint32_t bar_readback);       /* reuse Day 33 helper */
 void program_bridge_window(node_t *bridge, uint64_t mem_base);
 ```
 
@@ -613,9 +1003,9 @@ void program_bridge_window(node_t *bridge, uint64_t mem_base);
 
 ---
 
-# Day 20 — PCIe power management (ASPM / L1.2)
+# Day 35 — PCIe power management (ASPM / L1.2)
 
-## D20 — ASPM / L1.2 FSM with CLKREQ# ordering asserts (`d20_aspm_l12_fsm`)
+## D35 — ASPM / L1.2 FSM with CLKREQ# ordering asserts (`d35_aspm_l12_fsm`)
 
 **Problem statement.** Build the ASPM state machine focused on **L1.2 entry and exit**, with strict side-band timing assertions. Track:
 - link state (`L0`, `L0s`, `L1`, `L1.1`, `L1.2`)
@@ -651,16 +1041,16 @@ bool send_tlp (aspm_link_t *l);   /* must be in L0 */
 
 ---
 
-# Day 21 — PCIe bring-up + functional val
+# Day 36 — PCIe bring-up + functional val
 
-## D21 — LTSSM stuck-state classifier (`d21_ltssm_stuck_classifier`)
+## D36 — LTSSM stuck-state classifier (`d36_ltssm_stuck_classifier`)
 
 **Problem statement.** Build the post-Si tool that takes an LTSSM state snapshot + symptom set and classifies the likely root cause. Input is `{ltssm_t stuck_in, bool refclk_present, bool perst_released, int lanes_detected, int target_lanes, gen_t target_gen, gen_t actual_gen, bool eq_phase_failed}`. Output one of:
 
 - `STUCK_DETECT` — refclk missing OR PERST# stuck asserted OR receiver detect failing.
 - `STUCK_POLLING` — TS1/TS2 not exchanged; check lane reversal, polarity inversion, ref-clock spread-spectrum mismatch.
 - `STUCK_CONFIG` — lane count mismatch (target 16, detected 8 → bad solder or broken lane).
-- `STUCK_RECOVERY` — equalization Phase 2/3 failed, signal-integrity issue.
+- `STUCK_RECOVERY` — equalization Phase 6/3 failed, signal-integrity issue.
 - `STUCK_SPEED` — reached L0 but at lower gen than target (EQ Phase 0 floor only).
 - `STUCK_UNKNOWN`.
 
@@ -685,13 +1075,13 @@ const char *next_action(stuck_class_t c);
 
 **Driver:** 5 canned symptom sets — one per class except UNKNOWN. Expect 5 correct classifications and 5 next-action lines.
 
-**Interview prompts:** The 10-step bring-up ladder (PERST# → refclk → Detect → ... → L0 @ target gen). LTSSM stuck-state diagnostic table — what symptom maps to which state. Gen3+ equalisation 4 phases (Phase 0 floor, Phase 1 TX preset, Phase 2 RX tuning, Phase 3 final). AER categories (correctable, non-fatal, fatal) and what each tells you. Compliance test mode (loopback master/slave). Lecroy / Teledyne PETrainer / Keysight scope — what each catches.
+**Interview prompts:** The 10-step bring-up ladder (PERST# → refclk → Detect → ... → L0 @ target gen). LTSSM stuck-state diagnostic table — what symptom maps to which state. Gen3+ equalisation 4 phases (Phase 0 floor, Phase 4 TX preset, Phase 6 RX tuning, Phase 7 final). AER categories (correctable, non-fatal, fatal) and what each tells you. Compliance test mode (loopback master/slave). Lecroy / Teledyne PETrainer / Keysight scope — what each catches.
 
 ---
 
-# Day 22 — PCIe × PM intersection
+# Day 37 — PCIe × PM intersection
 
-## D22 — PkgC blocker arbiter (`d22_pkgc_blocker_arbiter`)
+## D37 — PkgC blocker arbiter (`d37_pkgc_blocker_arbiter`)
 
 **Problem statement.** This is the post-Si tool for the *most-asked debug question* of the role: "platform never enters PkgC10, what's blocking it?" Build an arbiter that aggregates votes from every IP that participates in deep-idle gating and prints the **dependency chain** of blockers, not just the leaf cause.
 
@@ -729,16 +1119,37 @@ pkg_state_t arbitrate(const platform_t *p, char *why, size_t whysz);
 2. One link in L1 with LTR=10 µs → `PKG_C6` with blocker explanation.
 3. USB host not idle → `PKG_C2` with blocker explanation.
 
-**Interview prompts:** The PkgC6 / PkgC10 blocker chain — what each leaf vote means. L1.2 ↔ PkgC10 handshake (10-step: kernel → governor → PMC → RC → EP → CLKREQ# → ...). Deadlock farm: cyclic LTR negotiation, stuck CLKREQ#, half-gated rail. The retained **ADR ↔ PkgC** recap (Day 17 bug shows up here as cross-IP). The **L0p mid-FLIT** Gen6 bug — what it costs at PM intersection. 10-step debug playbook for "no PkgC10".
+**Interview prompts:** The PkgC6 / PkgC10 blocker chain — what each leaf vote means. L1.2 ↔ PkgC10 handshake (10-step: kernel → governor → PMC → RC → EP → CLKREQ# → ...). Deadlock farm: cyclic LTR negotiation, stuck CLKREQ#, half-gated rail. The retained **ADR ↔ PkgC** recap (Day 31 bug shows up here as cross-IP). The **L0p mid-FLIT** Gen6 bug — what it costs at PM intersection. 10-step debug playbook for "no PkgC10".
 
 ---
 
-# Days 23-24 — Wrap
+# Day 39 — Logic Puzzles + Estimation (optional)
 
-No new exercises. Re-run any 2-3 of D08 / D11 / D17 / D20 / D22 cold, on a clean checkout, as warm-ups before the loop.
+## D39 — Puzzle simulators (`d39_puzzle_sims`)
 
-- **Day 23** is the MSFT/NPU exit-pointer day; the only coding tie-in is to re-read [d06_page_walk](solutions/d06_page_walk.c) so the QNN page-fault story flows.
-- **Day 24** is the final timed mock loop; the exercises are the *content* you point at in the resume walk-through, not new code.
+**Problem statement.** *(Optional — this day is reasoning-first.)* Verify two puzzles by simulation so the result is felt, not just asserted.
+
+**Implement:**
+```c
+/* 100 prisoners: each opens half the boxes. Returns 1 if ALL succeed. */
+int prisoners_random(int n, unsigned *seed);     /* random opening  -> ~0% */
+int prisoners_cycle (int n, unsigned *seed);     /* cycle-following -> ~31% */
+double monte_carlo(int (*trial)(int,unsigned*), int n, int iters, unsigned seed);
+/* coin game: pile of N, take 1..k, last to take wins. Returns 1 if first player wins under N%(k+1). */
+int coin_game_optimal(int N, int k);
+```
+
+**Driver / tests:**
+- `monte_carlo(prisoners_cycle, 100, 100000, seed)` ≈ **0.31** (`1 - ln 2`); `prisoners_random` ≈ 0.
+- `coin_game_optimal(100,10)==1` (first player wins by taking 1 → leaves 99 = 9×11); `coin_game_optimal(99,10)==0`.
+
+**Interview prompts:** Name the strategy before solving. The information-theoretic bound for a weighing puzzle. What tiny case sanity-checks the answer? Why does cycle-following beat random by ~10^29?
+
+---
+
+# Days 40–41 — narrative + final mock
+
+No new code. **Day 40** (Intel-role narrative) and **Day 41** (final mock) point at the *content* you've built — re-run any 2–3 exercises cold (e.g. `d09_fsm_detect` / `d14_async_fifo` / `d24_vplan_coverage` / `d23_cpu_bringup_ladder`) as warm-ups.
 
 ---
 
