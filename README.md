@@ -25,6 +25,6 @@ make sol-s01_bitops         # compile and run one reference program
 make clean
 ```
 
-Starter programs compile before implementation; their assertions are expected to fail until the TODOs are completed. Exercise and solution targets accept both `dNN_<name>` and `sNN_<name>` names.
+Starter programs compile before implementation; their assertions are expected to fail until the TODOs are completed. Curriculum exercises use `sNN_<topic>` filenames so files sort in session order; the legacy Day 0 set keeps its `d00_*` names.
 
 The Day 0 sanity exercises remain available alongside the new session-linked models. The source is MIT licensed; see [`LICENSE`](LICENSE).
