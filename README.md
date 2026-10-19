@@ -1,6 +1,6 @@
 # Silicon Validation Coding
 
-Standalone C models paired with the 18-session curriculum in [`../prep_plan/`](../prep_plan/). The learning path progresses through six stages, from bit-level fundamentals to post-silicon power debugging. Session-to-exercise details are in [`EXERCISES.md`](EXERCISES.md) and [`../prep_plan/CODING_MAP.md`](../prep_plan/CODING_MAP.md).
+Standalone Systems-C models and assertion-checked reference solutions, organized into six stages of silicon validation and systems engineering. The exercise roadmap and session mapping are in [`EXERCISES.md`](EXERCISES.md).
 
 ## Layout
 

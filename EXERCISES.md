@@ -2,7 +2,7 @@
 
 Systems-C exercises paired with the six-stage silicon validation curriculum. Each exercise has a learner starter in `exercises/` and a standalone, assertion-checked reference in `solutions/`. Read the matching session note first, implement the TODOs, then compare behavior with the reference.
 
-The theory and session sequence live in [`../prep_plan/`](../prep_plan/); the companion exercise map is [`../prep_plan/CODING_MAP.md`](../prep_plan/CODING_MAP.md).
+This guide is self-contained and maps each coding exercise to its session topic, starter source, and acceptance behavior.
 
 ## Roadmap
 
