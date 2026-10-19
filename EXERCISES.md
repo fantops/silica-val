@@ -41,24 +41,117 @@ make clean
 
 `all-ex` compiles every starter; its assertions are expected to fail until the TODOs are implemented. `all-sol` compiles each runnable reference program. Targets use `ex-<name>` or `sol-<name>` and accept both `dNN_<name>` and `sNN_<name>` prefixes.
 
-## Exercise Contracts
+## How To Work An Exercise
 
-- `s07_reg_poke`: preserve neighboring register bits and distinguish poll success from timeout.
-- `s05_dev_init`: perform reset, bounded ready polling, control-bit updates, and data readback.
-- `s01_bitops`: cover zero/overflow boundaries, field preservation, rotate-width guards, and 64-bit composition.
-- `s02_fsm_detect`: detect overlapping and non-overlapping `101` in `10101`; recover from an illegal state.
-- `s03_clock_reset`: switch only with both clock inputs low, divide on clock edges, and release reset domains in order.
-- `s04_cdc_sync`: show a lost back-to-back toggle event and lossless ordered handshake transfer.
-- `s04_async_fifo`: exercise full/empty rejection, wraparound, and FIFO data ordering.
-- `s08_cache_sim`: show four compulsory misses for sequential accesses and conflict misses for a fixed-set stride.
-- `s13_tlb_iommu`: demonstrate a TLB hit, valid IOVA mapping, absent mappings, and write-protection faults.
-- `s12_sq_doorbell`: publish descriptors before updating the doorbell and consume queue entries in order.
-- `s09_spsc_acqrel`: enforce empty/full behavior and ordered publication with C11 acquire-release atomics.
-- `s06_cpu_bringup_ladder`: reject stage skips, enforce retry limits, and reach the final boot stage.
-- `s16_dvfs`: apply voltage-before-frequency on ramp-up and frequency-before-voltage on ramp-down; enforce thermal caps.
-- `s16_residency_delta`: handle unsigned counter wrap and flag residency greater than elapsed wall ticks.
-- `s10_ltssm_walk`: accept legal link-state transitions, count Recovery entries, and size a BAR from readback.
-- `s11_enum_walker`: discover the fake four-function topology recursively and size/program a bridge window.
-- `s17_pkgc_blocker_arbiter`: distinguish full PkgC10 eligibility from PCIe and USB blockers.
+1. Open the linked starter and read its TODOs and assertions in `main()`.
+2. Implement the TODOs without weakening or removing the assertions.
+3. Run the named `make ex-...` target. A starter is expected to fail its assertions until its TODOs are complete.
+4. Once it passes, run the matching `make sol-...` target and compare its behavior with the reference.
+
+S14 reuses `s05_dev_init` and `s02_fsm_detect`; S15 reuses `s12_sq_doorbell`. The sessions build on those models rather than requiring duplicate source files.
+
+## Exercise Tasks
+
+### S01: `s01_bitops.c`
+
+Implement the 32-bit bit toolkit: power-of-two checks, floor/ceiling powers of two, Kernighan and SWAR popcounts, field extraction/update, rotations, bit/byte reversal, leading/trailing-zero counts, and XOR helpers. Guard zero inputs, invalid field widths, shifts by the word size, and `ceil_pow2` overflow.
+
+The assertions check boundary values, neighboring-bit preservation, rotation round trips, bit-count agreement, XOR cases, and 64-bit composition. Run `make ex-s01_bitops`.
+
+### S02: `s02_fsm_detect.c`
+
+Implement a parameterized sequence detector, a sliding-window comparison oracle, and a safe FSM step. Preserve matching suffixes when overlap is enabled; return to the reset state for injected or invalid states.
+
+The harness checks that `101` occurs twice in `10101` with overlap and once without, and that invalid states recover. Run `make ex-s02_fsm_detect`.
+
+### S03: `s03_clock_reset.c`
+
+Implement a clock-mux step that changes sources only while both clocks are low, a divide-by-N counter that advances on rising edges, and ordered reset release with invalid-order detection.
+
+The assertions check a glitch-free switch, divide-by-two behavior, and sequential domain release. Run `make ex-s03_clock_reset`.
+
+### S04: `s04_cdc_sync.c`
+
+Model an open-loop toggle synchronizer sampled every `dest_div` source cycles, a closed-loop ordered word transfer, and binary-to-Gray conversion. The toggle model should deliver separated events but lose two toggles that occur between destination samples; the handshake must deliver every word.
+
+The harness checks both event patterns, ordered word delivery, and a Gray-code result. Run `make ex-s04_cdc_sync`.
+
+### S04 Stretch: `s04_async_fifo.c`
+
+Implement Gray pointers, full/empty detection with a wrap bit, and FIFO read/write operations that reject overflow and underflow without losing or inventing data. Complete the burst-backlog model used to explore FIFO depth.
+
+The assertions check full/empty behavior, data order across the ring, rejected operations, and a one-bit Gray transition. Run `make ex-s04_async_fifo`.
+
+### S05: `s05_dev_init.c`
+
+Complete the fake-device initialization path. Implement masked register updates and a bounded ready poll that simulates hardware asserting ready on the third read. Keep the reset, enable, start, and data-readback sequence intact.
+
+The assertions check successful readiness, preserved control bits, and data readback. Run `make ex-s05_dev_init`.
+
+### S06: `s06_cpu_bringup_ladder.c`
+
+Implement stage advancement for the reset-to-boot ladder. Reject skipped or invalid stages, require the previous stage to be ready, and track whether a failure remains within its retry budget.
+
+The harness attempts an illegal skip, exercises retry exhaustion, then advances through every stage to `STG_BOOT_REACHED`. Run `make ex-s06_cpu_bringup_ladder`.
+
+### S07: `s07_reg_poke.c`
+
+Implement field-mask creation, register read-modify-write, and bounded polling through `volatile` accessors. Reject invalid bit ranges and modify only the requested field.
+
+The assertions check that writing `0xAA` into bits 15:8 changes `0xDEADBEEF` to `0xDEADAAEF`, and distinguish a poll timeout from an already-set bit. Run `make ex-s07_reg_poke`.
+
+### S08: `s08_cache_sim.c`
+
+Implement the 8-set, 4-way, 64-byte-line cache model. Decode tag and set, record hit/miss counts, refresh recency on a hit, and evict the least-recently-used line on a miss.
+
+The harness expects four compulsory misses and 60 hits for sequential word accesses; a 1024-byte stride should conflict in one set and miss every time. Run `make ex-s08_cache_sim`.
+
+### S09: `s09_spsc_acqrel.c`
+
+Implement the single-producer/single-consumer ring using the provided C11 atomic indices. Use acquire/release ordering so payload writes happen before publishing the tail and payload reads happen before releasing the head. Keep the indices on separate cache lines.
+
+The assertions check empty/full rejection and FIFO ordering across the ring. Run `make ex-s09_spsc_acqrel`.
+
+### S10: `s10_ltssm_walk.c`
+
+Implement the legal LTSSM transition table and count entries into Recovery. Also calculate BAR size from the readback mask after ignoring BAR type bits.
+
+The harness walks a legal path, rejects `Detect -> L0`, checks two Recovery entries, and verifies a 1 MiB BAR result. Run `make ex-s10_ltssm_walk`.
+
+### S11: `s11_enum_walker.c`
+
+Use the provided four-function fake topology to implement recursive bus enumeration. Recurse through bridges, size BARs, and assign an aligned bridge memory window while preserving discovered MSI/MSI-X capability data.
+
+The assertions check four discovered functions, BAR size, bridge-window programming, and the endpoint with MSI-X. Run `make ex-s11_enum_walker`.
+
+### S12: `s12_sq_doorbell.c`
+
+Implement submission and device-consume operations for the 16-entry ring. The descriptor is fixed at 64 bytes. Publish descriptor fields before the release fence and MMIO doorbell update; consume entries in order and report empty/full conditions.
+
+The harness checks doorbell advancement, descriptor contents and order, and empty-queue behavior. Run `make ex-s12_sq_doorbell`.
+
+### S13: `s13_tlb_iommu.c`
+
+Implement FIFO TLB lookup with deterministic page-walk results, then the two-level IOMMU translation. Distinguish missing first-level entries, missing second-level mappings, and writes to read-only pages.
+
+The assertions check a repeat-access TLB hit, a valid IOVA-to-PA translation, both missing-map paths, and a permission fault. Run `make ex-s13_tlb_iommu`.
+
+### S16: `s16_dvfs.c`
+
+Select the lowest operating point that meets the requested frequency, subject to the 1200 MHz cap at temperatures of 90 C or higher. Model safe transition order: voltage before frequency when increasing performance, frequency before voltage when decreasing it. Calculate IPC safely when the cycle count is zero.
+
+The harness checks normal and thermally capped selections, transition order, and IPC. Run `make ex-s16_dvfs`.
+
+### S16: `s16_residency_delta.c`
+
+Implement unsigned 64-bit wrap-safe counter deltas and residency percentages for the core and package counters. Flag a residency delta greater than elapsed TSC ticks and print a compact summary row.
+
+The assertions check a wrap from near `UINT64_MAX`, a valid percentage, and an impossible over-100% residency. Run `make ex-s16_residency_delta`.
+
+### S17: `s17_pkgc_blocker_arbiter.c`
+
+Aggregate core, PCIe/LTR, USB, display, and memory-controller idle votes. Return the deepest eligible package state and write a useful explanation into the supplied reason buffer when a vote blocks deeper idle.
+
+The harness checks full PkgC10 eligibility, a shallow PCIe link limiting entry to PkgC6, and active USB limiting entry to PkgC2. Run `make ex-s17_pkgc_blocker_arbiter`.
 
 Day 0 sanity exercises remain in `solutions/d00_*.c`; they are foundations rather than part of the 18-session mapping.
