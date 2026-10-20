@@ -28,16 +28,18 @@ static uint64_t bar_size(uint32_t readback) {
 }
 
 static void enumerate(uint8_t bus, tree_t *out) {
+    if (out == NULL || out->nodes == NULL || out->count < 0) return;
     for (unsigned i = 0; i < sizeof(inventory) / sizeof(inventory[0]); i++) {
         if (inventory[i].bus != bus || out->count >= MAX_NODES) continue;
-        discovered[out->count++] = inventory[i];
-        if (inventory[i].f.header_type == 1 && inventory[i].f.secondary_bus > bus)
+        out->nodes[out->count++] = inventory[i];
+        if ((inventory[i].f.header_type & 0x7fu) == 1 && inventory[i].f.secondary_bus > bus)
             enumerate(inventory[i].f.secondary_bus, out);
     }
 }
 
 static void program_bridge_window(node_t *bridge, uint64_t mem_base) {
-    bridge->f.window_base = mem_base;
+    if (bridge == NULL || mem_base > UINT64_MAX - UINT64_C(0xfffff)) return;
+    bridge->f.window_base = (mem_base + UINT64_C(0xfffff)) & ~UINT64_C(0xfffff);
 }
 
 int main(void) {
@@ -47,6 +49,12 @@ int main(void) {
     assert(bar_size(0xFFF00004u) == 0x100000u);
     program_bridge_window(&tree.nodes[1], 0x80000000u);
     assert(tree.nodes[1].f.window_base == 0x80000000u);
+    program_bridge_window(&tree.nodes[1], 0x80000001u);
+    assert(tree.nodes[1].f.window_base == 0x80100000u);
+    node_t alternate[MAX_NODES];
+    tree_t independent = {.nodes = alternate, .count = 0};
+    enumerate(0, &independent);
+    assert(independent.count == 4 && alternate[3].f.msix);
     assert(tree.nodes[3].f.msix);
     puts("s11_enum_walker: 4 functions discovered; all assertions passed");
     return 0;

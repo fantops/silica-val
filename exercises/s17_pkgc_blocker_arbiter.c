@@ -29,6 +29,13 @@ int main(void) {
     };
     char why[128];
     assert(arbitrate(&platform, why, sizeof(why)) == PKG_C10);
+    platform.core_cs[1] = 0;
+    assert(arbitrate(&platform, why, sizeof(why)) == PKG_C0);
+    platform.core_cs[0] = 1;
+    assert(arbitrate(&platform, why, sizeof(why)) == PKG_C0);
+    platform.core_cs[1] = 6;
+    assert(arbitrate(&platform, why, sizeof(why)) == PKG_C2);
+    platform.core_cs[0] = 6;
     platform.links[0].state = ASPM_L1;
     platform.links[0].ltr_us = 10;
     assert(arbitrate(&platform, why, sizeof(why)) == PKG_C6);
@@ -37,6 +44,6 @@ int main(void) {
     platform.links[0].ltr_us = 1500;
     platform.usb_idle = false;
     assert(arbitrate(&platform, why, sizeof(why)) == PKG_C2);
-    puts("Complete the TODO to pass s17_pkgc_blocker_arbiter.");
+    puts("s17_pkgc_blocker_arbiter: all assertions passed");
     return 0;
 }

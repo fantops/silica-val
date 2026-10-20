@@ -9,19 +9,19 @@ static int clk_mux_step(int *selected, int sel, int clk_a, int clk_b, int *out, 
     return *out;
 }
 
-static int div_n(int *count, int clk_in, int n) {
-    static int previous_clock;
-    static int output;
-    if (count == NULL || n <= 0) return -1;
-    if (clk_in && !previous_clock) {
-        (*count)++;
-        if (*count >= n) {
-            *count = 0;
-            output = !output;
+typedef struct { unsigned count; int previous_clock, output; } divider_t;
+
+static int div_n(divider_t *divider, int clk_in, int n) {
+    if (divider == NULL || n < 2 || n % 2 != 0) return -1;
+    if (clk_in && !divider->previous_clock) {
+        divider->count++;
+        if (divider->count >= (unsigned)n / 2) {
+            divider->count = 0;
+            divider->output = !divider->output;
         }
     }
-    previous_clock = clk_in;
-    return output;
+    divider->previous_clock = clk_in;
+    return divider->output;
 }
 
 static int reset_seq(int *dom_rst, const int *order, int n, int step, int *bad_order) {
@@ -32,6 +32,12 @@ static int reset_seq(int *dom_rst, const int *order, int n, int step, int *bad_o
         for (int j = 0; j < i; j++) if (order[i] == order[j]) *bad_order = 1;
     }
     if (*bad_order) return -1;
+    for (int prior = 0; prior < step; prior++) {
+        if (dom_rst[order[prior]] != 0) {
+            *bad_order = 1;
+            return -1;
+        }
+    }
     dom_rst[order[step]] = 0;
     return step + 1;
 }
@@ -40,15 +46,24 @@ int main(void) {
     int selected = 0, out = 0, runt = 0;
     assert(clk_mux_step(&selected, 1, 0, 0, &out, &runt) == 0);
     assert(selected == 1 && runt == 0);
-    int count = 0;
-    assert(div_n(&count, 1, 2) == 0);
-    (void)div_n(&count, 0, 2);
-    assert(div_n(&count, 1, 2) == 1);
+    assert(clk_mux_step(&selected, 0, 1, 1, &out, &runt) == 1 && selected == 1);
+    divider_t divider = {0}, independent = {0};
+    const int divide_by_four[] = {0, 1, 1, 0, 0, 1, 1, 0};
+    for (unsigned edge = 0; edge < 8; edge++) {
+        (void)div_n(&divider, 0, 4);
+        assert(div_n(&divider, 1, 4) == divide_by_four[edge]);
+        assert(div_n(&divider, 1, 4) == divide_by_four[edge]);
+    }
+    assert(div_n(&independent, 1, 2) == 1);
+    assert(div_n(&independent, 0, 3) == -1);
     int resets[] = {1, 1, 1};
     const int order[] = {0, 1, 2};
     int bad = 0;
+    assert(reset_seq(resets, order, 3, 1, &bad) == -1 && bad);
     assert(reset_seq(resets, order, 3, 0, &bad) == 1 && !bad && resets[0] == 0);
     assert(reset_seq(resets, order, 3, 1, &bad) == 2 && resets[1] == 0);
+    const int duplicate[] = {0, 0, 2};
+    assert(reset_seq(resets, duplicate, 3, 2, &bad) == -1 && bad);
     puts("s03_clock_reset: all assertions passed");
     return 0;
 }

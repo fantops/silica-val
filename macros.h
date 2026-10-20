@@ -8,12 +8,12 @@
 #define MASK(msb, lsb)          ((UINT32_MAX >> (31 - ((msb) - (lsb)))) << (lsb))
 #define FIELD_GET(r, msb, lsb)  (((r) & MASK(msb, lsb)) >> (lsb))
 #define FIELD_READ(r, msb, lsb) FIELD_GET(r, msb, lsb)  /* legacy alias */
-#define FIELD_PREP(v, msb, lsb) (MASK(msb, lsb) & ((v) << (lsb)))
+#define FIELD_PREP(v, msb, lsb) (MASK(msb, lsb) & ((uint32_t)(v) << (lsb)))
 #define FIELD_RESET(r, msb, lsb) ((r) & ~MASK(msb, lsb))
 #define FIELD_WRITE(r, v, msb, lsb) (FIELD_PREP(v, msb, lsb) | FIELD_RESET(r, msb, lsb))
 
-#define ALIGN_UP(x, a)   (((x) + (a) - 1) & ~((a) - 1))
-#define ALIGN_DOWN(x, a) ((x) & ~((a) - 1))
+#define ALIGN_UP(x, a)   (((uintmax_t)(x) + (a) - 1) & ~((uintmax_t)(a) - 1))
+#define ALIGN_DOWN(x, a) ((uintmax_t)(x) & ~((uintmax_t)(a) - 1))
 #define IS_ALIGNED(x, a) (((x) & ((a) - 1)) == 0)
 #define POW2(n)          ((n) && !((n) & ((n) - 1)))
 #define ARRAY_SIZE(a)    (sizeof(a) / sizeof((a)[0]))

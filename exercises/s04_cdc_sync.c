@@ -11,6 +11,8 @@ static int toggle_sync(const int *src_pulses, int n, int dest_div, int *dest_pul
     return -1;
 }
 
+static unsigned handshake_ticks;
+
 static int handshake_xfer(const uint32_t *words, int n, uint32_t *out) {
     /* TODO: transfer all words in order using a closed-loop handshake model. */
     (void)words;
@@ -34,8 +36,10 @@ int main(void) {
     const uint32_t words[] = {0x12, 0x34, 0x56};
     uint32_t received[3];
     assert(handshake_xfer(words, 3, received) == 3);
+    assert(handshake_ticks > 3);
     for (int i = 0; i < 3; i++) assert(received[i] == words[i]);
+    assert(handshake_xfer(words, 0, received) == 0 && handshake_ticks == 0);
     assert(bin_to_gray(7) == 4);
-    puts("Complete the TODOs to pass s04_cdc_sync.");
+    puts("s04_cdc_sync: all assertions passed");
     return 0;
 }

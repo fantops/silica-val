@@ -47,7 +47,13 @@ int main(void) {
     assert(bar_size(0xFFF00004u) == 0x100000u);
     program_bridge_window(&tree.nodes[1], 0x80000000u);
     assert(tree.nodes[1].f.window_base == 0x80000000u);
+    program_bridge_window(&tree.nodes[1], 0x80000001u);
+    assert(tree.nodes[1].f.window_base == 0x80100000u);
+    node_t alternate[MAX_NODES];
+    tree_t independent = {.nodes = alternate, .count = 0};
+    enumerate(0, &independent);
+    assert(independent.count == 4 && alternate[3].f.msix);
     assert(tree.nodes[3].f.msix);
-    puts("Complete the TODOs to pass s11_enum_walker.");
+    puts("s11_enum_walker: 4 functions discovered; all assertions passed");
     return 0;
 }

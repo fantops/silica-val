@@ -38,8 +38,8 @@ int main(void) {
     assert(residency_pct(0x100, start, 0x400, &sanity) == 50.0 && !sanity);
     assert(residency_pct(200, 0, 100, &sanity) == 200.0 && sanity);
     msr_snap_t t0 = {.cc6 = start, .tsc = 0};
-    msr_snap_t t1 = {.cc6 = 0x100, .tsc = 0x400};
+    msr_snap_t t1 = {.cc6 = 0x100, .pc6 = 0x500, .tsc = 0x400};
     print_row("sample", &t0, &t1);
-    puts("Complete the TODOs to pass s16_residency_delta.");
+    puts("s16_residency_delta: all assertions passed");
     return 0;
 }

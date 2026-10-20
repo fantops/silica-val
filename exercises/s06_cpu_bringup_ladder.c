@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 typedef enum {
-    STG_RESET_DEASSERTED, STG_CLOCKS_STABLE, STG_RAMS_BIST,
+    STG_CLOCKS_STABLE, STG_RESET_DEASSERTED, STG_RAMS_BIST,
     STG_MMU_ENABLED, STG_CACHE_ENABLED, STG_INT_CONTROLLER_UP,
     STG_TIMERS_ONLINE, STG_SMP_RELEASED, STG_BOOT_REACHED, STG_NUM
 } stage_t;
@@ -27,11 +27,11 @@ static bool inject_fail(bringup_t *state, stage_t stage, int max_retries) {
 
 int main(void) {
     bringup_t state = {.current = -1};
-    assert(!advance(&state, STG_CLOCKS_STABLE));
+    assert(!advance(&state, STG_RESET_DEASSERTED));
     assert(inject_fail(&state, STG_RAMS_BIST, 1));
     assert(!inject_fail(&state, STG_RAMS_BIST, 1));
     for (int stage = 0; stage < STG_NUM; stage++) assert(advance(&state, (stage_t)stage));
     assert(state.ready[STG_BOOT_REACHED]);
-    puts("Complete the TODOs to pass s06_cpu_bringup_ladder.");
+    puts("s06_cpu_bringup_ladder: all assertions passed");
     return 0;
 }

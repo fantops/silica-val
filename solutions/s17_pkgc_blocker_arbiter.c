@@ -22,6 +22,16 @@ static pkg_state_t arbitrate(const platform_t *platform, char *why, size_t why_s
         return PKG_C0;
     }
     for (int i = 0; i < platform->n_cores; i++) {
+        if (platform->core_cs[i] == 0) {
+            snprintf(why, why_size, "core %d is active", i);
+            return PKG_C0;
+        }
+        if (platform->core_cs[i] < 0) {
+            snprintf(why, why_size, "invalid core state");
+            return PKG_C0;
+        }
+    }
+    for (int i = 0; i < platform->n_cores; i++) {
         if (platform->core_cs[i] < 6) {
             snprintf(why, why_size, "core %d is not in C6", i);
             return PKG_C2;
@@ -50,6 +60,13 @@ int main(void) {
     };
     char why[128];
     assert(arbitrate(&platform, why, sizeof(why)) == PKG_C10);
+    platform.core_cs[1] = 0;
+    assert(arbitrate(&platform, why, sizeof(why)) == PKG_C0);
+    platform.core_cs[0] = 1;
+    assert(arbitrate(&platform, why, sizeof(why)) == PKG_C0);
+    platform.core_cs[1] = 6;
+    assert(arbitrate(&platform, why, sizeof(why)) == PKG_C2);
+    platform.core_cs[0] = 6;
     platform.links[0].state = ASPM_L1;
     platform.links[0].ltr_us = 10;
     assert(arbitrate(&platform, why, sizeof(why)) == PKG_C6);

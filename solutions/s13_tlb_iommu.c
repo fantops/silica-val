@@ -29,6 +29,11 @@ static uint32_t translate(uint32_t va) {
 }
 
 static bool iommu_translate(iommu_ctx_t *ctx, uint32_t iova, bool write, uint64_t *pa, const char **fault) {
+    if (ctx == NULL || pa == NULL || fault == NULL) return false;
+    if (iova >= (UINT32_C(1) << 24)) {
+        *fault = "IOVA outside 24-bit model";
+        return false;
+    }
     unsigned l1 = (iova >> 20) & 0xfu;
     unsigned l2 = (iova >> 12) & 0xffu;
     if (ctx->pd[l1] == NULL || !ctx->pd[l1]->present) { *fault = "L1 not present"; return false; }
@@ -53,6 +58,15 @@ int main(void) {
     assert(!iommu_translate(&ctx, 0x2000, false, &pa, &fault) && fault != NULL);
     assert(!iommu_translate(&ctx, 0x1000, true, &pa, &fault) && fault != NULL);
     assert(!iommu_translate(&ctx, 0x100000, false, &pa, &fault) && fault != NULL);
+    pa = UINT64_C(0xdeadbeef);
+    assert(!iommu_translate(&ctx, 0x01001000, false, &pa, &fault));
+    assert(pa == UINT64_C(0xdeadbeef) && fault != NULL);
+    for (unsigned slot = 0; slot < TLB_ENTRIES; slot++) tlb[slot].valid = false;
+    evict_next = 0;
+    for (uint32_t page = 0; page < TLB_ENTRIES + 1; page++) (void)translate(page << 12);
+    unsigned previous_misses = misses;
+    (void)translate(0);
+    assert(misses == previous_misses + 1);
     puts("s13_tlb_iommu: all assertions passed");
     return 0;
 }

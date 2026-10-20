@@ -35,6 +35,7 @@ Use a C11 compiler with GNU Make, from this directory:
 make all-ex
 make ex-s01_bitops
 make all-sol
+make check-sol
 make sol-s01_bitops
 make clean
 ```
@@ -66,21 +67,21 @@ The harness checks that `101` occurs twice in `10101` with overlap and once with
 
 ### S03: `s03_clock_reset.c`
 
-Implement a clock-mux step that changes sources only while both clocks are low, a divide-by-N counter that advances on rising edges, and ordered reset release with invalid-order detection.
+Implement an ideal clock-mux step that changes sources only while both clocks are low, an even-N divider that toggles every N/2 rising edges, and ordered reset release. Each divider owns its previous-clock/count/output state. Reject odd/invalid divisors and reset steps whose predecessors are still asserted. This is not a metastability-aware clock-mux circuit.
 
-The assertions check a glitch-free switch, divide-by-two behavior, and sequential domain release. Run `make ex-s03_clock_reset`.
+The assertions check deferred switching, divide-by-four over a full waveform, divide-by-two, independent divider instances, and skipped/duplicate reset prerequisites. Run `make ex-s03_clock_reset`.
 
 ### S04: `s04_cdc_sync.c`
 
-Model an open-loop toggle synchronizer sampled every `dest_div` source cycles, a closed-loop ordered word transfer, and binary-to-Gray conversion. The toggle model should deliver separated events but lose two toggles that occur between destination samples; the handshake must deliver every word.
+Model an open-loop toggle sampled every `dest_div` source cycles, a two-phase request/ack transfer with two-stage control visibility and a slower destination clock, and binary-to-Gray conversion. Hold data until acknowledgment and report elapsed `handshake_ticks`; do not replace the protocol with a copy loop. This discrete model does not simulate analog metastability.
 
 The harness checks both event patterns, ordered word delivery, and a Gray-code result. Run `make ex-s04_cdc_sync`.
 
 ### S04 Stretch: `s04_async_fifo.c`
 
-Implement Gray pointers, full/empty detection with a wrap bit, and FIFO read/write operations that reject overflow and underflow without losing or inventing data. Complete the burst-backlog model used to explore FIFO depth.
+Implement Gray pointers, full/empty detection with a wrap bit, and rejected full/empty operations. `write_clock` and `read_clock` advance two-stage remote-pointer visibility; flags can remain asserted until remote progress arrives. Reset initializes both domains together. Compute peak end-of-tick backlog from explicit 0/1 schedules; same-tick arrivals may satisfy a read. Averages or one random seed do not prove a safe depth.
 
-The assertions check full/empty behavior, data order across the ring, rejected operations, and a one-bit Gray transition. Run `make ex-s04_async_fifo`.
+The assertions check delayed full/empty deassertion, repeated wraps, ordered data, rejected operations, a Gray transition, and peak backlog 4 for an explicit schedule. Run `make ex-s04_async_fifo`.
 
 ### S05: `s05_dev_init.c`
 
@@ -110,7 +111,7 @@ The harness expects four compulsory misses and 60 hits for sequential word acces
 
 Implement the single-producer/single-consumer ring using the provided C11 atomic indices. Use acquire/release ordering so payload writes happen before publishing the tail and payload reads happen before releasing the head. Keep the indices on separate cache lines.
 
-The assertions check empty/full rejection and FIFO ordering across the ring. Run `make ex-s09_spsc_acqrel`.
+The assertions check empty/full rejection, FIFO order, and 100,000 two-thread transfers starting near unsigned index wrap. POSIX builds link pthreads; Windows uses native threads. This stress test does not prove all weak-memory executions. Run `make ex-s09_spsc_acqrel`.
 
 ### S10: `s10_ltssm_walk.c`
 
@@ -128,11 +129,11 @@ The assertions check four discovered functions, BAR size, bridge-window programm
 
 Implement submission and device-consume operations for the 16-entry ring. The descriptor is fixed at 64 bytes. Publish descriptor fields before the release fence and MMIO doorbell update; consume entries in order and report empty/full conditions.
 
-The harness checks doorbell advancement, descriptor contents and order, and empty-queue behavior. Run `make ex-s12_sq_doorbell`.
+The harness checks doorbell advancement, descriptor order, empty/full rejection, and ring reuse. This single-threaded model has no real DMA or completion record; C11 fences alone do not define hardware I/O ordering. Run `make ex-s12_sq_doorbell`.
 
 ### S13: `s13_tlb_iommu.c`
 
-Implement FIFO TLB lookup with deterministic page-walk results, then the two-level IOMMU translation. Distinguish missing first-level entries, missing second-level mappings, and writes to read-only pages.
+Implement FIFO TLB lookup with hit/miss counters and deterministic page-walk results, then a 24-bit two-level IOMMU model. Reject larger IOVAs without changing the output address; distinguish absent mappings and writes to read-only pages. This does not implement PASID/ATS/PRI or real VT-d formats.
 
 The assertions check a repeat-access TLB hit, a valid IOVA-to-PA translation, both missing-map paths, and a permission fault. Run `make ex-s13_tlb_iommu`.
 
@@ -140,7 +141,7 @@ The assertions check a repeat-access TLB hit, a valid IOVA-to-PA translation, bo
 
 Select the lowest operating point that meets the requested frequency, subject to the 1200 MHz cap at temperatures of 90 C or higher. Model safe transition order: voltage before frequency when increasing performance, frequency before voltage when decreasing it. Calculate IPC safely when the cycle count is zero.
 
-The harness checks normal and thermally capped selections, transition order, and IPC. Run `make ex-s16_dvfs`.
+Populate `last_sequence` so the harness observes both transition actions and their order; a no-op must fail. Tests cover normal/capped and boundary selections, both directions, and zero-cycle/null IPC inputs. Run `make ex-s16_dvfs`.
 
 ### S16: `s16_residency_delta.c`
 
@@ -152,6 +153,6 @@ The assertions check a wrap from near `UINT64_MAX`, a valid percentage, and an i
 
 Aggregate core, PCIe/LTR, USB, display, and memory-controller idle votes. Return the deepest eligible package state and write a useful explanation into the supplied reason buffer when a vote blocks deeper idle.
 
-The harness checks full PkgC10 eligibility, a shallow PCIe link limiting entry to PkgC6, and active USB limiting entry to PkgC2. Run `make ex-s17_pkgc_blocker_arbiter`.
+The harness checks PkgC10 eligibility, a shallow link limiting entry to PkgC6, busy USB limiting entry to PkgC2, and an active core requiring PkgC0. These thresholds are illustrative, not universal CPU power-state definitions. Run `make ex-s17_pkgc_blocker_arbiter`.
 
 Day 0 sanity exercises remain in `solutions/d00_*.c`; they are foundations rather than part of the 18-session mapping.

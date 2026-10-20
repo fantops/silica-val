@@ -35,6 +35,11 @@ int main(void) {
     assert(device_consume_one(&consumed) == 0 && consumed.cmd == 1 && consumed.arg == 0xAAAA);
     assert(device_consume_one(&consumed) == 0 && consumed.cmd == 2 && consumed.arg == 0xBBBB);
     assert(device_consume_one(&consumed) == -1);
-    puts("Complete the TODOs to pass s12_sq_doorbell.");
+    for (uint32_t i = 0; i < SQ_SIZE; i++) assert(sq_submit(i, i + 1) == 0);
+    assert(sq_submit(99, 99) == -1);
+    for (uint32_t i = 0; i < SQ_SIZE; i++) {
+        assert(device_consume_one(&consumed) == 0 && consumed.cmd == i && consumed.arg == i + 1);
+    }
+    puts("s12_sq_doorbell: all assertions passed");
     return 0;
 }

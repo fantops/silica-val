@@ -54,6 +54,8 @@ int main(void) {
     assert(ALIGN_UP(16U,   16U) == 16U);
     assert(ALIGN_UP(17U,   16U) == 32U);
     assert(ALIGN_UP(0x1001U, 0x1000U) == 0x2000U);
+    assert(ALIGN_UP(UINT64_C(0x100001001), 0x1000U) == UINT64_C(0x100002000));
+    assert(ALIGN_DOWN(UINT64_C(0x100001fff), 0x1000U) == UINT64_C(0x100001000));
 
     assert(ALIGN_DOWN(0U,    16U) == 0U);
     assert(ALIGN_DOWN(15U,   16U) == 0U);

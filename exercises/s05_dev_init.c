@@ -40,6 +40,6 @@ int main(void) {
     assert((reg_read(CTRL) & (CTRL_EN | CTRL_START)) == (CTRL_EN | CTRL_START));
     reg_write(DATA, 0xDEADBEEFu);
     assert(reg_read(DATA) == 0xDEADBEEFu);
-    puts("Complete the TODOs to pass s05_dev_init.");
+    puts("s05_dev_init: all assertions passed");
     return 0;
 }

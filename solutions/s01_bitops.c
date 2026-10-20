@@ -17,7 +17,7 @@ static uint32_t floor_pow2(uint32_t x) {
 }
 
 static uint32_t ceil_pow2(uint32_t x) {
-    if (x <= 1) return x;
+    if (x <= 1) return 1;
     if (x > 0x80000000u) return 0;
     return floor_pow2(x - 1) << 1;
 }
@@ -119,12 +119,16 @@ int main(void) {
     assert(is_pow2(1) && is_pow2(1024) && !is_pow2(0) && !is_pow2(12));
     assert(floor_pow2(100) == 64 && floor_pow2(0) == 0);
     assert(ceil_pow2(100) == 128 && ceil_pow2(1) == 1);
+    assert(ceil_pow2(0) == 1 && ceil_pow2(0x80000000u) == 0x80000000u);
     assert(ceil_pow2(0x80000001u) == 0);
     for (uint32_t value = 0; value < 100000; value += 97) {
         assert(popcount_kern(value) == popcount_swar(value));
     }
     assert(put_field(0xDEADBEEFu, 8, 8, 0xAA) == 0xDEADAAEFu);
     assert(get_field(0xDEADAAEFu, 8, 8) == 0xAA);
+    assert(get_field(UINT32_MAX, 0, 32) == UINT32_MAX);
+    assert(put_field(0x12345678u, 32, 1, 0) == 0x12345678u);
+    assert(get_field(UINT32_MAX, 1, 32) == 0);
     assert(rol32(0x12345678u, 32) == 0x12345678u);
     assert(ror32(rol32(0x12345678u, 7), 7) == 0x12345678u);
     assert(ffs32(0x10) == 5 && ffs32(0) == 0);

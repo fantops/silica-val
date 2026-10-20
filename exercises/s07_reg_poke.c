@@ -34,10 +34,18 @@ int main(void) {
     volatile uint32_t reg = 0xDEADBEEFu;
     reg_field_write(&reg, 15, 8, 0xAA);
     assert(reg == 0xDEADAAEFu);
+    reg_field_write(&reg, 32, 32, UINT32_MAX);
+    reg_field_write(&reg, 3, 4, UINT32_MAX);
+    assert(reg == 0xDEADAAEFu);
+    reg_field_write(&reg, 31, 0, UINT32_MAX);
+    assert(reg == UINT32_MAX);
+    reg_field_write(&reg, 31, 31, 0);
+    assert(reg == UINT32_C(0x7fffffff));
     reg = 0;
     assert(wait_for_bit_set(&reg, BIT(0), 5) == -1);
     reg = BIT(0);
     assert(wait_for_bit_set(&reg, BIT(0), 5) == 0);
-    puts("Complete the TODOs to pass s07_reg_poke.");
+    assert(wait_for_bit_set(&reg, BIT(0), 0) == -1);
+    puts("s07_reg_poke: all assertions passed");
     return 0;
 }

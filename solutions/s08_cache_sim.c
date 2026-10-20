@@ -41,6 +41,12 @@ int main(void) {
     }
     assert(sequential.hits == 60 && sequential.misses == 4);
     assert(stride.hits == 0 && stride.misses == 64);
+    cache_t replacement = {0};
+    for (uint32_t line = 0; line < WAYS; line++) assert(!access(&replacement, line * SETS * LINE_SIZE));
+    assert(access(&replacement, 0));
+    assert(!access(&replacement, WAYS * SETS * LINE_SIZE));
+    assert(access(&replacement, 0));
+    assert(!access(&replacement, SETS * LINE_SIZE));
     printf("s08_cache_sim: sequential %u/%u hits, stride %u/%u hits\n",
            sequential.hits, sequential.misses, stride.hits, stride.misses);
     return 0;

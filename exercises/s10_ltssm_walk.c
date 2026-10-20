@@ -31,6 +31,6 @@ int main(void) {
     link.st = LTSSM_DETECT;
     assert(!go(&link, LTSSM_L0));
     assert(bar_size_from_readback(0xFFF00004u) == 0x100000u);
-    puts("Complete the TODOs to pass s10_ltssm_walk.");
+    puts("s10_ltssm_walk: all assertions passed");
     return 0;
 }

@@ -2,7 +2,11 @@
 #include <stdint.h>
 #include <stdio.h>
 
-typedef struct { uint32_t mem[256]; uint32_t wptr, rptr; int depth; } afifo_t;
+typedef struct {
+    uint32_t mem[256];
+    uint32_t wptr, rptr, write_sync1, write_sync2, read_sync1, read_sync2;
+    int depth;
+} afifo_t;
 
 static uint32_t bin_to_gray(uint32_t value) {
     /* TODO: Gray encoding changes exactly one bit between adjacent values. */
@@ -11,7 +15,17 @@ static uint32_t bin_to_gray(uint32_t value) {
 }
 
 static int fifo_empty(const afifo_t *fifo) {
-    return bin_to_gray(fifo->wptr) == bin_to_gray(fifo->rptr);
+    return fifo->write_sync2 == bin_to_gray(fifo->rptr);
+}
+
+static void write_clock(afifo_t *fifo) {
+    /* TODO: advance the two read-pointer synchronizer stages in the write domain. */
+    (void)fifo;
+}
+
+static void read_clock(afifo_t *fifo) {
+    /* TODO: advance the two write-pointer synchronizer stages in the read domain. */
+    (void)fifo;
 }
 static int fifo_full(const afifo_t *fifo) {
     /* TODO: account for the extra pointer wrap bit or equivalent occupancy. */
@@ -33,12 +47,11 @@ static int fifo_read(afifo_t *fifo, uint32_t *value) {
     return -1;
 }
 
-static int peak_backlog(int wr_per100, int rd_per10, int clocks, unsigned seed) {
-    /* TODO: model burst arrivals and return the maximum queued item count. */
-    (void)wr_per100;
-    (void)rd_per10;
+static int peak_backlog(const int *writes, const int *reads, int clocks) {
+    /* TODO: calculate peak end-of-tick backlog for explicit 0/1 schedules. */
+    (void)writes;
+    (void)reads;
     (void)clocks;
-    (void)seed;
     return -1;
 }
 
@@ -47,14 +60,34 @@ int main(void) {
     uint32_t value;
     for (uint32_t i = 0; i < 4; i++) assert(fifo_write(&fifo, i + 10) == 0);
     assert(fifo_full(&fifo) && fifo_write(&fifo, 99) == -1);
+    assert(fifo_empty(&fifo));
+    read_clock(&fifo);
+    assert(fifo_empty(&fifo));
+    read_clock(&fifo);
+    assert(!fifo_empty(&fifo));
     for (uint32_t i = 0; i < 4; i++) {
         assert(fifo_read(&fifo, &value) == 0 && value == i + 10);
     }
     assert(fifo_empty(&fifo) && fifo_read(&fifo, &value) == -1);
-    assert(fifo_write(&fifo, 77) == 0 && fifo_read(&fifo, &value) == 0 && value == 77);
+    assert(fifo_full(&fifo));
+    write_clock(&fifo);
+    assert(fifo_full(&fifo));
+    write_clock(&fifo);
+    assert(!fifo_full(&fifo));
+    for (uint32_t lap = 0; lap < 16; lap++) {
+        assert(fifo_write(&fifo, lap + 77) == 0);
+        read_clock(&fifo);
+        read_clock(&fifo);
+        assert(fifo_read(&fifo, &value) == 0 && value == lap + 77);
+        write_clock(&fifo);
+        write_clock(&fifo);
+    }
     uint32_t gray_change = bin_to_gray(7) ^ bin_to_gray(8);
     assert(gray_change != 0 && (gray_change & (gray_change - 1)) == 0);
-    assert(peak_backlog(80, 8, 1000, 1) >= 0);
-    puts("Complete the TODOs to pass s04_async_fifo.");
+    const int writes[] = {1,1,1,1,1,1,1,1,0,0,0,0};
+    const int reads[] = {0,0,0,0,1,1,1,1,1,1,1,1};
+    assert(peak_backlog(writes, reads, 12) == 4);
+    assert(peak_backlog(writes, reads, -1) == -1);
+    puts("s04_async_fifo: all assertions passed");
     return 0;
 }

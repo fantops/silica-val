@@ -19,10 +19,34 @@ static int toggle_sync(const int *src_pulses, int n, int dest_div, int *dest_pul
     return delivered;
 }
 
+static unsigned handshake_ticks;
+
 static int handshake_xfer(const uint32_t *words, int n, uint32_t *out) {
     if (words == NULL || out == NULL || n < 0) return -1;
-    for (int i = 0; i < n; i++) out[i] = words[i];
-    return n;
+    int request = 0, acknowledge = 0;
+    int request_sync1 = 0, request_sync2 = 0;
+    int acknowledge_sync1 = 0, acknowledge_sync2 = 0;
+    int submitted = 0, received = 0;
+    uint32_t held_data = 0;
+    handshake_ticks = 0;
+    while (received < n || acknowledge_sync2 != request) {
+        acknowledge_sync2 = acknowledge_sync1;
+        acknowledge_sync1 = acknowledge;
+        if (request == acknowledge_sync2 && submitted < n) {
+            held_data = words[submitted++];
+            request = !request;
+        }
+        handshake_ticks++;
+        if (handshake_ticks % 3 == 0) {
+            request_sync2 = request_sync1;
+            request_sync1 = request;
+            if (request_sync2 != acknowledge) {
+                out[received++] = held_data;
+                acknowledge = request_sync2;
+            }
+        }
+    }
+    return received;
 }
 
 static uint32_t bin_to_gray(uint32_t value) { return value ^ (value >> 1); }
@@ -36,7 +60,9 @@ int main(void) {
     const uint32_t words[] = {0x12, 0x34, 0x56};
     uint32_t received[3];
     assert(handshake_xfer(words, 3, received) == 3);
+    assert(handshake_ticks > 3);
     for (int i = 0; i < 3; i++) assert(received[i] == words[i]);
+    assert(handshake_xfer(words, 0, received) == 0 && handshake_ticks == 0);
     assert(bin_to_gray(7) == 4);
     puts("s04_cdc_sync: all assertions passed");
     return 0;
